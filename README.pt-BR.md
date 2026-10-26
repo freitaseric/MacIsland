@@ -116,9 +116,9 @@ tccutil reset AppleEvents com.freitaseric.MacIsland
 
 ## Compilar do código-fonte
 
-Você precisa do **Xcode 27 ou superior** (testado com o 27.1) e do SDK do
-macOS 14 ou superior. Versões mais antigas do Xcode podem não abrir o formato
-atual do projeto.
+Você precisa do **Xcode 26.6 ou superior** (testado com o 27.1) e do SDK do
+macOS 14 ou superior. Versões mais antigas podem não suportar as opções
+de concorrência do Swift usadas aqui.
 
 ```bash
 git clone https://github.com/freitaseric/MacIsland.git

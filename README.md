@@ -117,8 +117,8 @@ tccutil reset AppleEvents com.freitaseric.MacIsland
 
 ## Build from source
 
-You need **Xcode 27 or newer** (tested with Xcode 27.1) and the macOS 14 SDK
-or newer. Older Xcode versions may not open the current project format.
+You need **Xcode 26.6 or newer** (tested with Xcode 27.1) and the macOS 14 SDK
+or newer. Older versions may not support the Swift concurrency settings used here.
 
 ```bash
 git clone https://github.com/freitaseric/MacIsland.git

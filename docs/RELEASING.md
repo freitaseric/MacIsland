@@ -140,7 +140,7 @@ permission prompt, not a Gatekeeper warning.
   produced by the workflow, not a local Xcode build.
 - **CI cannot build the project** — the project format requires a recent Xcode.
   The workflow uses `macos-latest`; if the runner's Xcode is too old, use a
-  self-hosted runner with Xcode 27+.
+  self-hosted runner with Xcode 26.6+.
 
 ## Local release build (optional)
 

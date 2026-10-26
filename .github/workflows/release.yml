@@ -12,10 +12,6 @@ jobs:
   release:
     runs-on: macos-latest
 
-    env:
-      APP_PATH: ${{ runner.temp }}/DerivedData/Build/Products/Release/MacIsland.app
-      KEYCHAIN_PATH: ${{ runner.temp }}/app-signing.keychain-db
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -24,6 +20,11 @@ jobs:
         run: |
           sw_vers
           xcodebuild -version
+
+      - name: Set build paths
+        run: |
+          echo "APP_PATH=$RUNNER_TEMP/DerivedData/Build/Products/Release/MacIsland.app" >> "$GITHUB_ENV"
+          echo "KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db" >> "$GITHUB_ENV"
 
       - name: Check signing secrets
         env:
