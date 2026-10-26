@@ -1,0 +1,36 @@
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [Unreleased]
+
+## [1.0.0] - 2026-10-26
+
+### Added
+
+- Notch-anchored floating player for Spotify.
+- Compact and expanded island states with album artwork, title, artist, album,
+  progress, and playback controls.
+- Play/pause, previous, and next controls with optimistic UI updates.
+- Automatic refresh when Spotify opens or quits.
+- Clear permission, Spotify-closed, no-track, and error states.
+- Menu bar item with show/hide, refresh, Open at Login, About, and Quit.
+- English and Brazilian Portuguese localization.
+- Native app icon.
+- Open at Login support (`SMAppService`).
+- Single-instance protection.
+- Hardened Runtime with the Apple Events automation entitlement.
+- GitHub Actions build workflow and signed/notarized release workflow.
+
+### Known limitations
+
+- Spotify only (Apple Music is not supported yet).
+- The app is distributed outside the App Store and runs without the App Sandbox.
+- Automatic updates are not implemented.
+- Requires macOS 14 Sonoma or later.
+
+[Unreleased]: https://github.com/freitaseric/MacIsland/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/freitaseric/MacIsland/releases/tag/v1.0.0

@@ -1,0 +1,22 @@
+{
+  "sourceLanguage": "en",
+  "strings": {
+    "NSAppleEventsUsageDescription": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "MacIsland uses automation to show and control what's playing on Spotify."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O MacIsland usa automação para mostrar e controlar o que está tocando no Spotify."
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

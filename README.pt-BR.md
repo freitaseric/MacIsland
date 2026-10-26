@@ -1,0 +1,204 @@
+<p align="center">
+  <img src="docs/icon-256.png" width="128" alt="Ícone do MacIsland">
+</p>
+
+<h1 align="center">MacIsland</h1>
+
+<p align="center">
+  <a href="README.md">English</a> · <a href="README.pt-BR.md">Português (Brasil)</a>
+</p>
+
+<p align="center">
+  <strong>Um player de Spotify que mora no notch do seu MacBook.</strong>
+</p>
+
+<p align="center">
+  <a href="https://github.com/freitaseric/MacIsland/actions/workflows/build.yml"><img src="https://github.com/freitaseric/MacIsland/actions/workflows/build.yml/badge.svg" alt="Build"></a>
+  <a href="https://github.com/freitaseric/MacIsland/releases"><img src="https://img.shields.io/github/v/release/freitaseric/MacIsland?display_name=tag&sort=semver" alt="Última release"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="Licença MIT"></a>
+  <a href="#requisitos"><img src="https://img.shields.io/badge/macOS-14%2B-black.svg" alt="macOS 14+"></a>
+</p>
+
+<p align="center">
+  <img src="docs/preview-expanded.png" width="760" alt="MacIsland expandido mostrando uma música e os controles">
+</p>
+
+O MacIsland transforma a área em volta do notch do MacBook em um player de
+música. Ele lê o que está tocando no Spotify desktop, mostra a faixa e a capa e
+permite tocar, pausar, avançar e voltar sem sair do que você está fazendo.
+
+Feito em SwiftUI, com um `NSPanel` sem borda que fica acima da menu bar. Sem
+contas, sem analytics e sem login no Spotify: só o app do Spotify que você já
+usa.
+
+## Recursos
+
+- **Feito para o notch** — a superfície preta se funde ao notch e se expande em
+  um cartão compacto de player.
+- **O que está tocando** — capa, título, artista, álbum, tempo decorrido e
+  duração.
+- **Controles** — play/pause, anterior e próxima, com atualização otimista da
+  interface.
+- **Atualização automática** — reage quando o Spotify abre, fecha, troca de
+  faixa ou pausa.
+- **Estados claros** — telas para permissão de Automação, Spotify fechado, nada
+  tocando e erros inesperados.
+- **Menu bar completo** — mostrar/ocultar a ilha, atualizar, abrir o Spotify,
+  abrir no login, sobre e sair.
+- **Inglês e português do Brasil** — segue o idioma do sistema.
+- **Sem ícone no Dock** — um utilitário focado na menu bar.
+- **Releases universais e notarizadas** — Apple Silicon e Intel, assinadas com
+  Developer ID e notarizadas pela Apple.
+
+## Capturas de tela
+
+<p align="center">
+  <img src="docs/preview-compact.png" width="320" alt="Estado compacto do MacIsland junto ao notch">
+</p>
+
+<p align="center">
+  <img src="docs/preview-permission.pt-BR.png" width="760" alt="MacIsland pedindo permissão de Automação">
+</p>
+
+## Requisitos
+
+- macOS **14 Sonoma** ou superior.
+- **Spotify desktop** instalado e com login feito.
+- Um MacBook com notch para o visual pretendido. Em outras telas, o MacIsland
+  vira uma pílula flutuante logo abaixo da menu bar.
+- Mac com Apple Silicon ou Intel.
+
+## Instalação
+
+> **Código-fonte disponível agora.** O primeiro binário assinado e notarizado
+> está sendo preparado. Até ele chegar em Releases, compile a partir do código.
+
+1. Baixe o `MacIsland-x.y.z.zip` mais recente em
+   [Releases](https://github.com/freitaseric/MacIsland/releases).
+2. Descompacte e arraste o **MacIsland.app** para `/Applications`.
+3. Abra o MacIsland. Na primeira execução, o macOS pergunta se o MacIsland pode
+   controlar o Spotify — escolha **OK**.
+4. Clique na ilha compacta (ou no ícone de waveform na menu bar) para abrir o
+   player.
+
+As releases oficiais são assinadas com um certificado Developer ID e
+notarizadas pela Apple. Se você compilar o app por conta própria, isso não é
+necessário para uso local.
+
+## Uso
+
+- **Expandir / recolher**: clique na ilha compacta para expandir e no chevron
+  no canto superior direito para recolher.
+- **Reprodução**: use os botões de anterior, play/pause e próxima.
+- **Ícone na menu bar**: mostrar/ocultar a ilha, abrir o Spotify, atualizar,
+  ativar **Abrir no login**, ver **Sobre** ou sair.
+- **Abrir no login**: ative pela menu bar. O macOS pode pedir aprovação em
+  **Ajustes do Sistema → Geral → Itens de Login**. O app funciona melhor quando
+  está em `/Applications`.
+- **Múltiplas telas**: o MacIsland prioriza a tela integrada com notch. Em uma
+  tela sem notch, ele aparece como uma pílula flutuante abaixo da menu bar.
+
+## Permissão de Automação
+
+O MacIsland conversa com o Spotify via AppleScript, então o macOS pede sua
+permissão uma vez:
+
+**Ajustes do Sistema → Privacidade e Segurança → Automação → MacIsland → Spotify.**
+
+Se a ilha mostrar **Permissão necessária**, clique em **Abrir Ajustes** e ative
+o Spotify para o MacIsland.
+
+Se o diálogo nunca aparecer, feche o app, resete a permissão e abra de novo:
+
+```bash
+tccutil reset AppleEvents com.freitaseric.MacIsland
+```
+
+## Compilar do código-fonte
+
+Você precisa do **Xcode 27 ou superior** (testado com o 27.1) e do SDK do
+macOS 14 ou superior. Versões mais antigas do Xcode podem não abrir o formato
+atual do projeto.
+
+```bash
+git clone https://github.com/freitaseric/MacIsland.git
+cd MacIsland
+open MacIsland.xcodeproj
+```
+
+No Xcode:
+
+1. Selecione o target **MacIsland** → **Signing & Capabilities**.
+2. Escolha seu time (ou **Sign to Run Locally** se for só rodar localmente).
+3. Pressione **Run**.
+
+O entitlement de Apple Events já está configurado em
+`MacIsland/MacIsland.entitlements`, e a descrição de uso fica em
+`Config/Info.plist` e em `MacIsland/InfoPlist.xcstrings` (localizada).
+
+Build pela linha de comando:
+
+```bash
+xcodebuild \
+  -project MacIsland.xcodeproj \
+  -scheme MacIsland \
+  -configuration Debug \
+  -destination 'platform=macOS' \
+  build
+```
+
+## Como funciona
+
+- Um `NSPanel` sem borda e não ativável fica no nível `.statusBar` e é ancorado
+  no topo da tela.
+- `NSScreen.auxiliaryTopLeftArea` e `safeAreaInsets` detectam o notch e a
+  altura da menu bar, para a ilha crescer para baixo a partir do notch.
+- Um `MusicService` consulta o Spotify via `NSAppleScript` a cada dois segundos,
+  lendo um record tipado com faixa, URL da capa, estado, duração e posição.
+- Os comandos usam `playpause`, `next track` e `previous track`, com estado
+  otimista e refresh depois de cada comando.
+- O app não usa App Sandbox porque precisa enviar Apple Events para o Spotify.
+  Ele usa Hardened Runtime com o entitlement
+  `com.apple.security.automation.apple-events`.
+
+## Privacidade
+
+- Sem contas, analytics, telemetria ou rastreamento.
+- Nenhuma credencial do Spotify é lida ou armazenada.
+- A rede só é usada para carregar a capa do CDN de imagens do Spotify.
+- A única permissão do sistema pedida é **Automação**, e apenas para o Spotify.
+- O código é aberto — dá para auditar cada linha.
+
+## Limitações conhecidas
+
+- Só Spotify. Apple Music ainda não é suportado.
+- Ainda não há atualização automática.
+- Distribuído fora da Mac App Store, então roda sem App Sandbox.
+- O layout do notch é pensado para a tela integrada do MacBook; monitores
+  externos recebem a pílula flutuante.
+- O polling via AppleScript faz a barra de progresso atualizar em passos de dois
+  segundos.
+
+## Roadmap
+
+- Suporte a Apple Music.
+- Expandir ao passar o mouse e recolher ao clicar fora.
+- Progresso mais suave.
+- Atualizações automáticas com Sparkle.
+- Homebrew Cask.
+- Mais opções de aparência e comportamento.
+
+## Contribuindo
+
+Issues e pull requests são bem-vindos. Mantenha as mudanças focadas e teste com
+`xcodebuild` antes de abrir um PR. Para mudanças maiores, abra uma issue primeiro.
+
+## Licença
+
+[MIT](LICENSE) © 2026 Eric Freitas Sampaio.
+
+## Aviso
+
+O MacIsland é um projeto independente. Não é afiliado, endossado ou patrocinado
+pelo Spotify ou pela Apple. Spotify é uma marca da Spotify AB. MacBook e Mac são
+marcas da Apple Inc.
