@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-  <strong>A Spotify player that lives in your MacBook notch.</strong>
+  <strong>A dynamic island for your Mac. Starting with Spotify.</strong>
 </p>
 
 <p align="center">
@@ -23,19 +23,27 @@
   <img src="docs/preview-expanded.png" width="760" alt="MacIsland expanded player showing a song and playback controls">
 </p>
 
-MacIsland turns the area around your MacBook's notch into a tiny music player.
-It reads what is playing in the Spotify desktop app, shows the track and album
-artwork, and lets you play, pause, skip, and go back without leaving what you
-are doing.
+MacIsland makes the area around your MacBook's notch useful. The island is the
+product: a small, always-there surface for the things you need at a glance.
+Version 1 is a polished Spotify player, and the island is built to host more
+integrations over time.
 
 Built with SwiftUI and a borderless `NSPanel` that sits above the menu bar.
 No accounts, no analytics, no Spotify login: just the Spotify app you already
 have.
 
+## The idea
+
+The notch is always in view. MacIsland gives it a purpose beyond a camera
+cutout. Today it's music; the same surface can grow into timers, focus modes,
+calendar events, system actions, and whatever else deserves a glance.
+
 ## Features
 
 - **Notch-native layout** — the black surface blends into the notch and expands
   into a compact player card.
+- **Made to grow** — the island is the product, not a single-purpose music
+  widget. Spotify is the first integration, not the ceiling.
 - **Now playing at a glance** — album artwork, title, artist, album, elapsed
   time, and duration.
 - **Playback controls** — play/pause, previous, and next with optimistic UI
@@ -172,7 +180,8 @@ xcodebuild \
 
 ## Known limitations
 
-- Spotify only. Apple Music is not supported yet.
+- Version 1 ships one integration: Spotify. The island is designed for more,
+  but there is no plugin system yet.
 - No automatic updates yet.
 - Distributed outside the Mac App Store, so the app runs without the App
   Sandbox.
@@ -182,7 +191,9 @@ xcodebuild \
 
 ## Roadmap
 
-- Apple Music support.
+- More integrations: timers, focus modes, calendar events, and system actions.
+- A small integration surface for third-party actions.
+- More music sources, including Apple Music.
 - Hover to expand and click-outside to collapse.
 - Smoother progress interpolation.
 - Auto-updates with Sparkle.

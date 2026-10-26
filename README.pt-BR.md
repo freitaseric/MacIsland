@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-  <strong>Um player de Spotify que mora no notch do seu MacBook.</strong>
+  <strong>Uma dynamic island para o seu Mac. Começando pelo Spotify.</strong>
 </p>
 
 <p align="center">
@@ -23,18 +23,27 @@
   <img src="docs/preview-expanded.png" width="760" alt="MacIsland expandido mostrando uma música e os controles">
 </p>
 
-O MacIsland transforma a área em volta do notch do MacBook em um player de
-música. Ele lê o que está tocando no Spotify desktop, mostra a faixa e a capa e
-permite tocar, pausar, avançar e voltar sem sair do que você está fazendo.
+O MacIsland transforma a área em volta do notch do MacBook em algo útil. A
+ilha é o produto: uma superfície pequena e sempre presente para o que você
+precisa ver de relance. A versão 1 é um player de Spotify caprichado, e a
+ilha foi feita para receber mais integrações com o tempo.
 
 Feito em SwiftUI, com um `NSPanel` sem borda que fica acima da menu bar. Sem
 contas, sem analytics e sem login no Spotify: só o app do Spotify que você já
 usa.
 
+## A ideia
+
+O notch está sempre à vista. O MacIsland dá a ele um propósito além da câmera.
+Hoje é música; a mesma superfície pode crescer para timers, modos de foco,
+eventos da agenda, ações do sistema e o que mais merecer um relance.
+
 ## Recursos
 
 - **Feito para o notch** — a superfície preta se funde ao notch e se expande em
   um cartão compacto de player.
+- **Feita para crescer** — a ilha é o produto, não um widget de música. O
+  Spotify é a primeira integração, não o teto.
 - **O que está tocando** — capa, título, artista, álbum, tempo decorrido e
   duração.
 - **Controles** — play/pause, anterior e próxima, com atualização otimista da
@@ -171,7 +180,8 @@ xcodebuild \
 
 ## Limitações conhecidas
 
-- Só Spotify. Apple Music ainda não é suportado.
+- A versão 1 traz uma integração: Spotify. A ilha foi pensada para mais, mas
+  ainda não há sistema de plugins.
 - Ainda não há atualização automática.
 - Distribuído fora da Mac App Store, então roda sem App Sandbox.
 - O layout do notch é pensado para a tela integrada do MacBook; monitores
@@ -181,7 +191,9 @@ xcodebuild \
 
 ## Roadmap
 
-- Suporte a Apple Music.
+- Mais integrações: timers, modos de foco, agenda e ações do sistema.
+- Uma superfície de integração para ações de terceiros.
+- Mais fontes de música, incluindo Apple Music.
 - Expandir ao passar o mouse e recolher ao clicar fora.
 - Progresso mais suave.
 - Atualizações automáticas com Sparkle.

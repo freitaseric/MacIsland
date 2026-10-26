@@ -238,7 +238,7 @@ nonisolated enum L10n {
 
   static let aboutCredits = String(
     localized: "about.credits",
-    defaultValue: "A notch player for Spotify.\nNot affiliated with Spotify or Apple.",
+    defaultValue: "A dynamic island for your Mac.\nStarting with Spotify. Not affiliated with Spotify or Apple.",
     comment: "Credits shown in the About panel"
   )
 

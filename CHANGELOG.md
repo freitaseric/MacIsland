@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Notch-anchored floating player for Spotify.
+- Notch-anchored dynamic island for the Mac; Spotify is the first integration.
 - Compact and expanded island states with album artwork, title, artist, album,
   progress, and playback controls.
 - Play/pause, previous, and next controls with optimistic UI updates.
@@ -24,6 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Single-instance protection.
 - Hardened Runtime with the Apple Events automation entitlement.
 - GitHub Actions build workflow and signed/notarized release workflow.
+- A product structure designed to grow beyond a single integration.
 
 ### Known limitations
 
