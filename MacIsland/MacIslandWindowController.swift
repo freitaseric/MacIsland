@@ -31,15 +31,19 @@ private final class IslandHostingView<Content: View>: NSHostingView<Content> {
 final class MacIslandWindowController {
   private let state: MacIslandState
   private let music: MusicService
+  private let timer: TimerService
 
   private var panel: MacIslandPanel?
   private var layout: IslandLayout?
   private var collapseTask: Task<Void, Never>?
+  private var hoverTask: Task<Void, Never>?
+  private var escapeMonitor: Any?
   private var cancellables = Set<AnyCancellable>()
 
-  init(state: MacIslandState, music: MusicService) {
+  init(state: MacIslandState, music: MusicService, timer: TimerService) {
     self.state = state
     self.music = music
+    self.timer = timer
   }
 
   var isVisible: Bool {
@@ -75,7 +79,7 @@ final class MacIslandWindowController {
     panel.hidesOnDeactivate = false
     panel.isReleasedWhenClosed = false
     panel.isMovableByWindowBackground = false
-    panel.becomesKeyOnlyIfNeeded = true
+    panel.becomesKeyOnlyIfNeeded = false
     panel.animationBehavior = .none
     panel.collectionBehavior = [
       .canJoinAllSpaces,
@@ -85,7 +89,14 @@ final class MacIslandWindowController {
     ]
 
     panel.contentView = IslandHostingView(
-      rootView: MacIslandView(state: state, music: music)
+      rootView: MacIslandView(
+        state: state,
+        music: music,
+        timer: timer,
+        onHover: { [weak self] hovering in
+          self?.handleHover(hovering)
+        }
+      )
     )
 
     self.panel = panel
@@ -105,6 +116,30 @@ final class MacIslandWindowController {
       self?.reposition()
     }
     .store(in: &cancellables)
+
+    NotificationCenter.default.publisher(
+      for: NSWindow.didResignKeyNotification,
+      object: panel
+    )
+    .sink { [weak self] _ in
+      guard let self, self.state.isExpanded else { return }
+      self.state.collapse()
+    }
+    .store(in: &cancellables)
+
+    escapeMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) {
+      [weak self] event in
+      guard let self, self.panel?.isKeyWindow == true else {
+        return event
+      }
+
+      if event.keyCode == 53, self.state.isExpanded {
+        self.state.collapse()
+        return nil
+      }
+
+      return event
+    }
 
     panel.orderFrontRegardless()
   }
@@ -127,6 +162,28 @@ final class MacIslandWindowController {
     NSScreen.screens.first(where: {
       $0.auxiliaryTopLeftArea != nil && $0.auxiliaryTopRightArea != nil
     }) ?? NSScreen.main ?? NSScreen.screens.first
+  }
+
+  private func handleHover(_ hovering: Bool) {
+    hoverTask?.cancel()
+
+    if hovering {
+      guard !state.isExpanded else { return }
+
+      hoverTask = Task { [weak self] in
+        try? await Task.sleep(for: .milliseconds(220))
+        guard !Task.isCancelled, let self else { return }
+        self.state.expand()
+      }
+    } else if state.isExpanded {
+      hoverTask = Task { [weak self] in
+        try? await Task.sleep(for: .milliseconds(450))
+        guard !Task.isCancelled, let self, self.state.isExpanded else {
+          return
+        }
+        self.state.collapse()
+      }
+    }
   }
 
   private func handleExpansionChange(_ expanded: Bool) {

@@ -22,6 +22,9 @@ jobs:
           sw_vers
           xcodebuild -version
 
+      - name: Keep the project compatible with the runner's Xcode
+        run: sed -i '' 's/objectVersion = 110;/objectVersion = 77;/' MacIsland.xcodeproj/project.pbxproj
+
       - name: Build
         run: |
           set -o pipefail

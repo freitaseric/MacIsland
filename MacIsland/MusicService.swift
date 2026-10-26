@@ -22,10 +22,6 @@ struct SpotifyTrack: Equatable {
   var duration: TimeInterval
   var position: TimeInterval
 
-  var progress: Double {
-    guard duration > 0 else { return 0 }
-    return min(max(position / duration, 0), 1)
-  }
 }
 
 enum PlaybackStatus: Equatable {
@@ -116,6 +112,7 @@ final class MusicService: ObservableObject {
   private var pollTask: Task<Void, Never>?
   private var isRefreshing = false
   private var workspaceObservers: [NSObjectProtocol] = []
+  private(set) var positionReferenceDate = Date.distantPast
 
   var canControl: Bool {
     status == .ready && track != nil && !isCommandInFlight
@@ -194,6 +191,17 @@ final class MusicService: ObservableObject {
 
   func retry() {
     Task { await refresh() }
+  }
+
+  func position(at date: Date = Date()) -> TimeInterval {
+    guard let track else { return 0 }
+
+    let elapsed =
+      track.isPlaying && positionReferenceDate != .distantPast
+      ? max(0, date.timeIntervalSince(positionReferenceDate))
+      : 0
+
+    return min(max(track.position + elapsed, 0), track.duration)
   }
 
   func openSpotify() {
@@ -277,6 +285,7 @@ final class MusicService: ObservableObject {
     if track != newTrack {
       track = newTrack
     }
+    positionReferenceDate = Date()
     if status != .ready {
       status = .ready
     }

@@ -234,11 +234,104 @@ nonisolated enum L10n {
     comment: "App name shown as the menu title"
   )
 
+
+  // MARK: - Features and timer
+
+  static let featureSpotify = String(
+    localized: "feature.spotify",
+    defaultValue: "Spotify",
+    comment: "Feature picker label for Spotify"
+  )
+
+  static let featureTimer = String(
+    localized: "feature.timer",
+    defaultValue: "Timer",
+    comment: "Feature picker label for the focus timer"
+  )
+
+  static let timerReady = String(
+    localized: "timer.ready",
+    defaultValue: "Ready",
+    comment: "Timer status before it starts"
+  )
+
+  static let timerPaused = String(
+    localized: "timer.paused",
+    defaultValue: "Paused",
+    comment: "Timer status while paused"
+  )
+
+  static let timerFocus = String(
+    localized: "timer.focus",
+    defaultValue: "Focus",
+    comment: "Timer status while running"
+  )
+
+  static let timerDone = String(
+    localized: "timer.done",
+    defaultValue: "Done",
+    comment: "Timer status when the countdown reaches zero"
+  )
+
+  static let timerStart = String(
+    localized: "timer.start",
+    defaultValue: "Start",
+    comment: "Accessibility label for starting the timer"
+  )
+
+  static let timerPause = String(
+    localized: "timer.pause",
+    defaultValue: "Pause",
+    comment: "Accessibility label for pausing the timer"
+  )
+
+  static let timerReset = String(
+    localized: "timer.reset",
+    defaultValue: "Reset",
+    comment: "Accessibility label for resetting the timer"
+  )
+
+  static let timerMinutesFormat = String(
+    localized: "timer.minutes_format",
+    defaultValue: "%d min",
+    comment: "Short duration label for timer presets"
+  )
+
+  static let timerNotificationTitle = String(
+    localized: "timer.notification.title",
+    defaultValue: "Timer finished",
+    comment: "Title of the local notification when a timer ends"
+  )
+
+  static let timerNotificationBodyFormat = String(
+    localized: "timer.notification.body",
+    defaultValue: "Your %d-minute timer is done.",
+    comment: "Body of the local notification when a timer ends"
+  )
+
+  static let menuShowTimer = String(
+    localized: "menu.show_timer",
+    defaultValue: "Show Timer",
+    comment: "Menu item that switches the island to the timer feature"
+  )
+
+  static let buttonPrevious = String(
+    localized: "button.previous",
+    defaultValue: "Previous",
+    comment: "Accessibility label for the previous track button"
+  )
+
+  static let buttonNext = String(
+    localized: "button.next",
+    defaultValue: "Next",
+    comment: "Accessibility label for the next track button"
+  )
+
   // MARK: - About
 
   static let aboutCredits = String(
     localized: "about.credits",
-    defaultValue: "A dynamic island for your Mac.\nStarting with Spotify. Not affiliated with Spotify or Apple.",
+    defaultValue: "A dynamic island for your Mac.\nMusic, timers, and more to come. Not affiliated with Spotify or Apple.",
     comment: "Credits shown in the About panel"
   )
 

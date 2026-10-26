@@ -11,6 +11,7 @@ import SwiftUI
 @MainActor
 final class MacIslandState: ObservableObject {
   @Published private(set) var isExpanded = false
+  @Published private(set) var activeFeature: IslandFeature = .spotify
   @Published private(set) var hasNotch = false
   @Published private(set) var topInset: CGFloat = 0
 
@@ -21,6 +22,11 @@ final class MacIslandState: ObservableObject {
     if topInset != layout.topInset {
       topInset = layout.topInset
     }
+  }
+
+  func select(_ feature: IslandFeature) {
+    guard activeFeature != feature else { return }
+    activeFeature = feature
   }
 
   func expand() {

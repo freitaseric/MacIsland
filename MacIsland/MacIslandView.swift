@@ -11,6 +11,8 @@ import SwiftUI
 struct MacIslandView: View {
   @ObservedObject var state: MacIslandState
   @ObservedObject var music: MusicService
+  @ObservedObject var timer: TimerService
+  var onHover: (Bool) -> Void = { _ in }
 
   private var isExpanded: Bool { state.isExpanded }
 
@@ -60,9 +62,14 @@ struct MacIslandView: View {
           state.expand()
         }
       }
+      .onHover(perform: onHover)
       .animation(
         .spring(response: 0.36, dampingFraction: 0.86),
         value: isExpanded
+      )
+      .animation(
+        .easeInOut(duration: 0.18),
+        value: state.activeFeature
       )
       .animation(
         .spring(response: 0.36, dampingFraction: 0.86),
@@ -81,19 +88,95 @@ struct MacIslandView: View {
   @ViewBuilder
   private var content: some View {
     if isExpanded {
-      expandedContent
+      expandedIsland
         .transition(
           .opacity.combined(
             with: .scale(scale: 0.97, anchor: .top)
           )
         )
     } else {
-      compactContent
+      compactIsland
         .transition(.opacity)
     }
   }
 
-  private var compactContent: some View {
+  private var compactIsland: some View {
+    Group {
+      switch state.activeFeature {
+      case .spotify:
+        spotifyCompactContent
+      case .timer:
+        TimerCompactView(timer: timer)
+      }
+    }
+    .id(state.activeFeature)
+    .accessibilityElement(children: .combine)
+    .accessibilityAddTraits(.isButton)
+    .accessibilityAction {
+      state.expand()
+    }
+  }
+
+  private var expandedIsland: some View {
+    VStack(spacing: 8) {
+      featurePicker
+
+      Group {
+        switch state.activeFeature {
+        case .spotify:
+          spotifyExpandedContent
+        case .timer:
+          TimerExpandedView(timer: timer)
+        }
+      }
+      .id(state.activeFeature)
+      .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+    }
+    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+  }
+
+  private var featurePicker: some View {
+    HStack(spacing: 2) {
+      ForEach(IslandFeature.allCases) { feature in
+        let selected = state.activeFeature == feature
+
+        Button {
+          state.select(feature)
+        } label: {
+          HStack(spacing: 4) {
+            Image(systemName: feature.symbolName)
+              .font(.system(size: 9, weight: .semibold))
+
+            Text(feature.title)
+              .font(.system(size: 9.5, weight: .semibold))
+
+            if feature == .timer, !selected,
+              timer.isRunning || timer.isFinished
+            {
+              Circle()
+                .fill(.orange)
+                .frame(width: 4, height: 4)
+            }
+          }
+          .foregroundStyle(selected ? .white : .white.opacity(0.45))
+          .padding(.horizontal, 10)
+          .frame(height: 22)
+          .background(
+            selected ? .white.opacity(0.12) : .clear,
+            in: Capsule()
+          )
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(feature.title)
+        .accessibilityAddTraits(selected ? .isSelected : [])
+      }
+    }
+    .padding(2)
+    .background(.white.opacity(0.04), in: Capsule())
+    .frame(maxWidth: .infinity, alignment: .center)
+  }
+
+  private var spotifyCompactContent: some View {
     HStack(spacing: 8) {
       ArtworkView(
         url: music.track?.artworkURL,
@@ -121,7 +204,7 @@ struct MacIslandView: View {
   }
 
   @ViewBuilder
-  private var expandedContent: some View {
+  private var spotifyExpandedContent: some View {
     Group {
       switch music.status {
       case .ready:
@@ -219,31 +302,42 @@ struct MacIslandView: View {
   }
 
   private var progressRow: some View {
-    VStack(spacing: 5) {
-      GeometryReader { proxy in
-        ZStack(alignment: .leading) {
-          Capsule()
-            .fill(.white.opacity(0.12))
+    TimelineView(
+      .animation(
+        minimumInterval: 0.5,
+        paused: !(music.track?.isPlaying ?? false)
+      )
+    ) { timeline in
+      let position = music.position(at: timeline.date)
+      let duration = music.track?.duration ?? 0
+      let progress =
+        duration > 0
+        ? min(max(position / duration, 0), 1)
+        : 0
 
-          Capsule()
-            .fill(.green)
-            .frame(
-              width: max(
-                0,
-                proxy.size.width * (music.track?.progress ?? 0)
+      VStack(spacing: 5) {
+        GeometryReader { proxy in
+          ZStack(alignment: .leading) {
+            Capsule()
+              .fill(.white.opacity(0.12))
+
+            Capsule()
+              .fill(.green)
+              .frame(
+                width: max(0, proxy.size.width * progress)
               )
-            )
+          }
         }
-      }
-      .frame(height: 3)
+        .frame(height: 3)
 
-      HStack(spacing: 4) {
-        Text(timeLabel(music.track?.position ?? 0))
-        Spacer(minLength: 0)
-        Text(timeLabel(music.track?.duration ?? 0))
+        HStack(spacing: 4) {
+          Text(IslandTime.label(position))
+          Spacer(minLength: 0)
+          Text(IslandTime.label(duration))
+        }
+        .font(.system(size: 9, weight: .medium).monospacedDigit())
+        .foregroundStyle(.white.opacity(0.38))
       }
-      .font(.system(size: 9, weight: .medium).monospacedDigit())
-      .foregroundStyle(.white.opacity(0.38))
     }
   }
 
@@ -251,7 +345,11 @@ struct MacIslandView: View {
     HStack(spacing: 0) {
       Spacer(minLength: 0)
 
-      mediaButton("backward.fill", size: 15) {
+      mediaButton(
+        "backward.fill",
+        size: 15,
+        label: L10n.buttonPrevious
+      ) {
         music.previous()
       }
 
@@ -279,7 +377,11 @@ struct MacIslandView: View {
 
       Spacer().frame(width: 26)
 
-      mediaButton("forward.fill", size: 15) {
+      mediaButton(
+        "forward.fill",
+        size: 15,
+        label: L10n.buttonNext
+      ) {
         music.next()
       }
 
@@ -361,6 +463,7 @@ struct MacIslandView: View {
   private func mediaButton(
     _ symbol: String,
     size: CGFloat,
+    label: String,
     action: @escaping () -> Void
   ) -> some View {
     Button(action: action) {
@@ -371,6 +474,7 @@ struct MacIslandView: View {
     }
     .buttonStyle(.plain)
     .disabled(!music.canControl)
+    .accessibilityLabel(label)
   }
 
   // MARK: - Textos
@@ -407,19 +511,6 @@ struct MacIslandView: View {
     case .idle, .loading:
       return L10n.compactAppName
     }
-  }
-
-  private func timeLabel(_ seconds: TimeInterval) -> String {
-    let total = max(0, Int(seconds.rounded()))
-    if total >= 3600 {
-      return String(
-        format: "%d:%02d:%02d",
-        total / 3600,
-        (total % 3600) / 60,
-        total % 60
-      )
-    }
-    return String(format: "%d:%02d", total / 60, total % 60)
   }
 
   private var backgroundGradient: LinearGradient {

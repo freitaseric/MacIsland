@@ -21,6 +21,9 @@ jobs:
           sw_vers
           xcodebuild -version
 
+      - name: Keep the project compatible with the runner's Xcode
+        run: sed -i '' 's/objectVersion = 110;/objectVersion = 77;/' MacIsland.xcodeproj/project.pbxproj
+
       - name: Set build paths
         run: |
           echo "APP_PATH=$RUNNER_TEMP/DerivedData/Build/Products/Release/MacIsland.app" >> "$GITHUB_ENV"

@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-  <strong>Uma dynamic island para o seu Mac. Começando pelo Spotify.</strong>
+  <strong>Uma dynamic island para o seu Mac. Música, timers e mais.</strong>
 </p>
 
 <p align="center">
@@ -25,8 +25,9 @@
 
 O MacIsland transforma a área em volta do notch do MacBook em algo útil. A
 ilha é o produto: uma superfície pequena e sempre presente para o que você
-precisa ver de relance. A versão 1 é um player de Spotify caprichado, e a
-ilha foi feita para receber mais integrações com o tempo.
+precisa ver de relance. A versão 1 combina um player de Spotify caprichado
+com um timer de foco, e a ilha foi feita para receber mais integrações com o
+tempo.
 
 Feito em SwiftUI, com um `NSPanel` sem borda que fica acima da menu bar. Sem
 contas, sem analytics e sem login no Spotify: só o app do Spotify que você já
@@ -35,8 +36,8 @@ usa.
 ## A ideia
 
 O notch está sempre à vista. O MacIsland dá a ele um propósito além da câmera.
-Hoje é música; a mesma superfície pode crescer para timers, modos de foco,
-eventos da agenda, ações do sistema e o que mais merecer um relance.
+Hoje é música e timers de foco; a mesma superfície pode crescer para eventos
+da agenda, ações do sistema e o que mais merecer um relance.
 
 ## Recursos
 
@@ -44,16 +45,23 @@ eventos da agenda, ações do sistema e o que mais merecer um relance.
   um cartão compacto de player.
 - **Feita para crescer** — a ilha é o produto, não um widget de música. O
   Spotify é a primeira integração, não o teto.
+- **Timer de foco** — presets de 5, 15 e 25 minutos com iniciar, pausar,
+  reiniciar e uma notificação local no fim.
+- **Seletor de features** — alterne entre Spotify e timer sem sair da ilha.
 - **O que está tocando** — capa, título, artista, álbum, tempo decorrido e
   duração.
 - **Controles** — play/pause, anterior e próxima, com atualização otimista da
   interface.
 - **Atualização automática** — reage quando o Spotify abre, fecha, troca de
   faixa ou pausa.
+- **Hover, Escape e clique fora** — expanda ao passar o mouse, recolha com
+  Escape ou clicando fora. O clique também continua funcionando.
+- **Progresso suave** — interpolado entre os polls do Spotify, sem saltos a
+  cada dois segundos.
 - **Estados claros** — telas para permissão de Automação, Spotify fechado, nada
   tocando e erros inesperados.
-- **Menu bar completo** — mostrar/ocultar a ilha, atualizar, abrir o Spotify,
-  abrir no login, sobre e sair.
+- **Menu bar completo** — mostrar/ocultar a ilha, abrir o Spotify, ir para o
+  timer, atualizar, abrir no login, sobre e sair.
 - **Inglês e português do Brasil** — segue o idioma do sistema.
 - **Sem ícone no Dock** — um utilitário focado na menu bar.
 - **Releases universais e notarizadas** — Apple Silicon e Intel, assinadas com
@@ -62,7 +70,11 @@ eventos da agenda, ações do sistema e o que mais merecer um relance.
 ## Capturas de tela
 
 <p align="center">
-  <img src="docs/preview-compact.png" width="320" alt="Estado compacto do MacIsland junto ao notch">
+  <img src="docs/preview-compact.png" width="320" alt="Timer compacto do MacIsland junto ao notch">
+</p>
+
+<p align="center">
+  <img src="docs/preview-timer.png" width="760" alt="Timer de foco do MacIsland com presets e controles">
 </p>
 
 <p align="center">
@@ -175,27 +187,27 @@ xcodebuild \
 - Sem contas, analytics, telemetria ou rastreamento.
 - Nenhuma credencial do Spotify é lida ou armazenada.
 - A rede só é usada para carregar a capa do CDN de imagens do Spotify.
-- A única permissão do sistema pedida é **Automação**, e apenas para o Spotify.
+- As únicas permissões do sistema são **Automação** (Spotify) e **notificações**
+  (pedidas só quando você inicia o timer).
 - O código é aberto — dá para auditar cada linha.
 
 ## Limitações conhecidas
 
-- A versão 1 traz uma integração: Spotify. A ilha foi pensada para mais, mas
-  ainda não há sistema de plugins.
+- A versão 1 traz duas integrações: Spotify e um timer de foco. Ainda não há
+  sistema de plugins para features de terceiros.
+- O Spotify é a única fonte de música.
+- O timer para se o app for fechado.
 - Ainda não há atualização automática.
 - Distribuído fora da Mac App Store, então roda sem App Sandbox.
 - O layout do notch é pensado para a tela integrada do MacBook; monitores
   externos recebem a pílula flutuante.
-- O polling via AppleScript faz a barra de progresso atualizar em passos de dois
-  segundos.
 
 ## Roadmap
 
-- Mais integrações: timers, modos de foco, agenda e ações do sistema.
+- Mais integrações: modos de foco, agenda e ações do sistema.
 - Uma superfície de integração para ações de terceiros.
 - Mais fontes de música, incluindo Apple Music.
-- Expandir ao passar o mouse e recolher ao clicar fora.
-- Progresso mais suave.
+- Histórico de timers e persistência entre reinícios do app.
 - Atualizações automáticas com Sparkle.
 - Homebrew Cask.
 - Mais opções de aparência e comportamento.

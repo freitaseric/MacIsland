@@ -13,7 +13,7 @@ struct IslandLayout: Equatable {
   static let compactWidth: CGFloat = 224
   static let expandedWidth: CGFloat = 380
   static let compactContentHeight: CGFloat = 36
-  static let expandedContentHeight: CGFloat = 166
+  static let expandedContentHeight: CGFloat = 200
 
   let hasNotch: Bool
   let topInset: CGFloat

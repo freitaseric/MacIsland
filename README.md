@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-  <strong>A dynamic island for your Mac. Starting with Spotify.</strong>
+  <strong>A dynamic island for your Mac. Music, timers, and more.</strong>
 </p>
 
 <p align="center">
@@ -25,8 +25,8 @@
 
 MacIsland makes the area around your MacBook's notch useful. The island is the
 product: a small, always-there surface for the things you need at a glance.
-Version 1 is a polished Spotify player, and the island is built to host more
-integrations over time.
+Version 1 combines a polished Spotify player with a focus timer, and the
+island is built to host more integrations over time.
 
 Built with SwiftUI and a borderless `NSPanel` that sits above the menu bar.
 No accounts, no analytics, no Spotify login: just the Spotify app you already
@@ -35,7 +35,7 @@ have.
 ## The idea
 
 The notch is always in view. MacIsland gives it a purpose beyond a camera
-cutout. Today it's music; the same surface can grow into timers, focus modes,
+cutout. Today it's music and focus timers; the same surface can grow into
 calendar events, system actions, and whatever else deserves a glance.
 
 ## Features
@@ -44,16 +44,24 @@ calendar events, system actions, and whatever else deserves a glance.
   into a compact player card.
 - **Made to grow** — the island is the product, not a single-purpose music
   widget. Spotify is the first integration, not the ceiling.
+- **Focus timer** — 5, 15, and 25-minute presets with start, pause, reset, and a
+  local notification when the countdown ends.
+- **Feature switcher** — move between Spotify and the timer without leaving the
+  island.
 - **Now playing at a glance** — album artwork, title, artist, album, elapsed
   time, and duration.
 - **Playback controls** — play/pause, previous, and next with optimistic UI
   updates.
 - **Looks after itself** — refreshes automatically when Spotify opens, quits,
   changes track, or is paused.
+- **Hover, Escape, and click-outside** — expand on hover, collapse with Escape,
+  or click away. Click still works too.
+- **Smooth progress** — interpolated between Spotify polls instead of jumping
+  every two seconds.
 - **Clear states** — helpful screens for missing Automation permission, Spotify
   closed, nothing playing, and unexpected errors.
-- **Menu bar companion** — show/hide the island, refresh, open Spotify, launch
-  at login, about, and quit.
+- **Menu bar companion** — show/hide the island, open Spotify, jump to the
+  timer, refresh, launch at login, about, and quit.
 - **English and Brazilian Portuguese** — follows your system language.
 - **No Dock icon** — a focused menu bar utility.
 - **Universal and notarized releases** — Apple Silicon and Intel, signed with
@@ -62,7 +70,11 @@ calendar events, system actions, and whatever else deserves a glance.
 ## Screenshots
 
 <p align="center">
-  <img src="docs/preview-compact.png" width="320" alt="MacIsland compact state next to the notch">
+  <img src="docs/preview-compact.png" width="320" alt="MacIsland compact focus timer next to the notch">
+</p>
+
+<p align="center">
+  <img src="docs/preview-timer.png" width="760" alt="MacIsland focus timer with presets and controls">
 </p>
 
 <p align="center">
@@ -175,27 +187,28 @@ xcodebuild \
 - No accounts, analytics, telemetry, or tracking.
 - No Spotify credentials are read or stored.
 - Network access is only used to load album artwork from Spotify's image CDN.
-- The only system permission requested is **Automation**, and only for Spotify.
+- The only system permissions are **Automation** (Spotify) and **notifications**
+  (requested only when you start the timer).
 - The source is open — you can audit every line.
 
 ## Known limitations
 
-- Version 1 ships one integration: Spotify. The island is designed for more,
-  but there is no plugin system yet.
+- Version 1 ships two integrations: Spotify and a focus timer. There is no
+  plugin system for third-party features yet.
+- Spotify is the only music source.
+- The focus timer stops if the app quits.
 - No automatic updates yet.
 - Distributed outside the Mac App Store, so the app runs without the App
   Sandbox.
 - The notch layout is tuned for the built-in MacBook display; external displays
   get the floating-pill fallback.
-- AppleScript polling means the progress bar updates in two-second steps.
 
 ## Roadmap
 
-- More integrations: timers, focus modes, calendar events, and system actions.
+- More integrations: focus modes, calendar events, and system actions.
 - A small integration surface for third-party actions.
 - More music sources, including Apple Music.
-- Hover to expand and click-outside to collapse.
-- Smoother progress interpolation.
+- Timer history and persistence across app restarts.
 - Auto-updates with Sparkle.
 - Homebrew Cask.
 - More appearance and behavior settings.

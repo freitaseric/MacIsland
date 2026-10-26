@@ -12,7 +12,9 @@ import SwiftUI
 @MainActor
 final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
   private var windowController: MacIslandWindowController?
+  private var state: MacIslandState?
   private var music: MusicService?
+  private var timer: TimerService?
   private var statusItem: NSStatusItem?
   private var visibilityItem: NSMenuItem?
   private var launchAtLoginItem: NSMenuItem?
@@ -22,9 +24,16 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     let state = MacIslandState()
     let music = MusicService()
-    let controller = MacIslandWindowController(state: state, music: music)
+    let timer = TimerService()
+    let controller = MacIslandWindowController(
+      state: state,
+      music: music,
+      timer: timer
+    )
 
+    self.state = state
     self.music = music
+    self.timer = timer
     windowController = controller
 
     setupStatusItem()
@@ -34,6 +43,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
   func applicationWillTerminate(_ notification: Notification) {
     music?.stop()
+    timer?.stop()
   }
 
   // MARK: - Menu bar
@@ -81,6 +91,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     )
     refresh.target = self
     menu.addItem(refresh)
+
+    let showTimer = NSMenuItem(
+      title: L10n.menuShowTimer,
+      action: #selector(showTimerFeature),
+      keyEquivalent: ""
+    )
+    showTimer.target = self
+    menu.addItem(showTimer)
 
     menu.addItem(.separator())
 
@@ -145,6 +163,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
   @objc private func refreshNow() {
     music?.retry()
+  }
+
+  @objc private func showTimerFeature() {
+    state?.select(.timer)
+    state?.expand()
   }
 
   @objc private func toggleLaunchAtLogin() {
