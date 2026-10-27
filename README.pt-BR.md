@@ -58,6 +58,8 @@ da agenda, ações do sistema e o que mais merecer um relance.
   Escape ou clicando fora. O clique também continua funcionando.
 - **Progresso suave** — interpolado entre os polls do Spotify, sem saltos a
   cada dois segundos.
+- **Sai da frente** — esconde automaticamente quando outro app entra em tela
+  cheia (inclusive jogos borderless) e volta ao sair.
 - **Estados claros** — telas para permissão de Automação, Spotify fechado, nada
   tocando e erros inesperados.
 - **Menu bar completo** — mostrar/ocultar a ilha, abrir o Spotify, ir para o
@@ -118,6 +120,8 @@ necessário para uso local.
   está em `/Applications`.
 - **Múltiplas telas**: o MacIsland prioriza a tela integrada com notch. Em uma
   tela sem notch, ele aparece como uma pílula flutuante abaixo da menu bar.
+- **Apps em tela cheia**: a ilha se esconde automaticamente enquanto outro app
+  está em tela cheia e volta quando você sai.
 
 ## Permissão de Automação
 

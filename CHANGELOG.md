@@ -18,6 +18,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   notifications, and a compact countdown.
 - Feature switcher between Spotify and the timer.
 - Hover to expand, Escape and click-outside to collapse.
+- The island hides automatically over full-screen apps and borderless games,
+  then returns when you leave full-screen.
 - Smooth progress interpolation between Spotify polls.
 - Play/pause, previous, and next controls with optimistic UI updates.
 - Automatic refresh when Spotify opens or quits.

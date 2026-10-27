@@ -58,6 +58,8 @@ calendar events, system actions, and whatever else deserves a glance.
   or click away. Click still works too.
 - **Smooth progress** — interpolated between Spotify polls instead of jumping
   every two seconds.
+- **Out of the way** — hides automatically when another app goes full-screen
+  (including borderless games) and comes back when you leave.
 - **Clear states** — helpful screens for missing Automation permission, Spotify
   closed, nothing playing, and unexpected errors.
 - **Menu bar companion** — show/hide the island, open Spotify, jump to the
@@ -117,6 +119,8 @@ Apple. If you build the app yourself, that is not required for local use.
   best when it lives in `/Applications`.
 - **Multiple displays**: MacIsland prefers the built-in display with a notch.
   On a display without a notch it appears as a floating pill below the menu bar.
+- **Full-screen apps**: the island hides automatically while another app is in
+  full-screen and returns when you leave it.
 
 ## Automation permission
 
