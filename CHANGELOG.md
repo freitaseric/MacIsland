@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+<!-- 1.1.0 is source-only for now: no tag or GitHub release until the app can be notarized. -->
+## [1.1.0] - 2026-10-27
+
 ### Added
 
 - Media integration backed by the macOS Now Playing session. It works with
@@ -83,5 +86,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Automatic updates are not implemented.
 - Requires macOS 14 Sonoma or later.
 
-[Unreleased]: https://github.com/freitaseric/MacIsland/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/freitaseric/MacIsland/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/freitaseric/MacIsland/releases/tag/v1.1.0
 [1.0.0]: https://github.com/freitaseric/MacIsland/releases/tag/v1.0.0
