@@ -1,0 +1,69 @@
+{
+  "fill": {
+    "solid": "extended-srgb:0.02745,0.03529,0.07059,1.00000"
+  },
+  "groups": [
+    {
+      "name": "Spark",
+      "layers": [
+        {
+          "name": "Spark",
+          "image-name": "spark.png"
+        }
+      ]
+    },
+    {
+      "name": "Island",
+      "lighting": "individual",
+      "specular": true,
+      "blur-material": 0.12,
+      "translucency": {
+        "enabled": true,
+        "value": 0.15
+      },
+      "shadow": {
+        "kind": "layer-color",
+        "opacity": 0.4
+      },
+      "layers": [
+        {
+          "name": "Gloss",
+          "image-name": "gloss.png",
+          "blend-mode": "plus-lighter"
+        },
+        {
+          "name": "Rim",
+          "image-name": "rim.png",
+          "blend-mode": "plus-lighter",
+          "opacity": 0.9
+        },
+        {
+          "name": "Island",
+          "image-name": "island.png",
+          "glass": true,
+          "fill": {
+            "solid": "extended-srgb:0.01569,0.02353,0.04706,0.85000"
+          }
+        },
+        {
+          "name": "Notch",
+          "image-name": "notch.png"
+        }
+      ]
+    },
+    {
+      "name": "Glow",
+      "layers": [
+        {
+          "name": "Glow",
+          "image-name": "background.png"
+        }
+      ]
+    }
+  ],
+  "supported-platforms": {
+    "squares": [
+      "macOS"
+    ]
+  }
+}
