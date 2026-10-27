@@ -12,7 +12,6 @@ struct MacIslandView: View {
   @ObservedObject var state: MacIslandState
   @ObservedObject var music: MusicService
   @ObservedObject var timer: TimerService
-  var onHover: (Bool) -> Void = { _ in }
 
   private var isExpanded: Bool { state.isExpanded }
 
@@ -62,7 +61,6 @@ struct MacIslandView: View {
           state.expand()
         }
       }
-      .onHover(perform: onHover)
       .animation(
         .spring(response: 0.36, dampingFraction: 0.86),
         value: isExpanded

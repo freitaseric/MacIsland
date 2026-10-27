@@ -20,10 +20,57 @@ private final class MacIslandPanel: NSPanel {
   }
 }
 
-/// Faz o primeiro clique funcionar mesmo com a ilha sem foco.
+/// Faz o primeiro clique funcionar mesmo com a ilha sem foco e usa uma
+/// tracking area AppKit para hover, que funciona mesmo com o app inativo.
 private final class IslandHostingView<Content: View>: NSHostingView<Content> {
+  var onHoverChange: ((Bool) -> Void)?
+  var onCompactClick: (() -> Void)?
+  var isExpanded: (() -> Bool)?
+
+  private var hoverTrackingArea: NSTrackingArea?
+
   override func acceptsFirstMouse(for event: NSEvent?) -> Bool {
     true
+  }
+
+  override func updateTrackingAreas() {
+    super.updateTrackingAreas()
+
+    if let hoverTrackingArea {
+      removeTrackingArea(hoverTrackingArea)
+    }
+
+    let area = NSTrackingArea(
+      rect: .zero,
+      options: [
+        .mouseEnteredAndExited,
+        .activeAlways,
+        .inVisibleRect,
+      ],
+      owner: self,
+      userInfo: nil
+    )
+    addTrackingArea(area)
+    hoverTrackingArea = area
+  }
+
+  override func mouseEntered(with event: NSEvent) {
+    onHoverChange?(true)
+  }
+
+  override func mouseExited(with event: NSEvent) {
+    onHoverChange?(false)
+  }
+
+  override func mouseDown(with event: NSEvent) {
+    window?.makeKey()
+
+    if isExpanded?() == false {
+      onCompactClick?()
+      return
+    }
+
+    super.mouseDown(with: event)
   }
 }
 
@@ -79,7 +126,8 @@ final class MacIslandWindowController {
     panel.hidesOnDeactivate = false
     panel.isReleasedWhenClosed = false
     panel.isMovableByWindowBackground = false
-    panel.becomesKeyOnlyIfNeeded = false
+    panel.becomesKeyOnlyIfNeeded = true
+    panel.acceptsMouseMovedEvents = true
     panel.animationBehavior = .none
     panel.collectionBehavior = [
       .canJoinAllSpaces,
@@ -88,16 +136,23 @@ final class MacIslandWindowController {
       .ignoresCycle,
     ]
 
-    panel.contentView = IslandHostingView(
+    let hostingView = IslandHostingView(
       rootView: MacIslandView(
         state: state,
         music: music,
-        timer: timer,
-        onHover: { [weak self] hovering in
-          self?.handleHover(hovering)
-        }
+        timer: timer
       )
     )
+    hostingView.onHoverChange = { [weak self] hovering in
+      self?.handleHover(hovering)
+    }
+    hostingView.onCompactClick = { [weak self] in
+      self?.state.expand()
+    }
+    hostingView.isExpanded = { [weak self] in
+      self?.state.isExpanded ?? false
+    }
+    panel.contentView = hostingView
 
     self.panel = panel
 
@@ -171,13 +226,13 @@ final class MacIslandWindowController {
       guard !state.isExpanded else { return }
 
       hoverTask = Task { [weak self] in
-        try? await Task.sleep(for: .milliseconds(220))
+        try? await Task.sleep(for: .milliseconds(150))
         guard !Task.isCancelled, let self else { return }
         self.state.expand()
       }
     } else if state.isExpanded {
       hoverTask = Task { [weak self] in
-        try? await Task.sleep(for: .milliseconds(450))
+        try? await Task.sleep(for: .milliseconds(400))
         guard !Task.isCancelled, let self, self.state.isExpanded else {
           return
         }
