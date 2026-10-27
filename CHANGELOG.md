@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+<!-- 1.0.1 is a source-only hotfix: no tag or GitHub release until the app can be notarized. -->
+## [1.0.1] - 2026-10-27
+
+### Fixed
+
+- Expanding the island now renders the expanded content immediately when
+  Spotify is paused, has no track loaded, or is closed. Previously the window
+  frame grew but the compact content remained visible until a playback update
+  forced a redraw.
+
 ## [1.0.0] - 2026-10-26
 
 ### Added

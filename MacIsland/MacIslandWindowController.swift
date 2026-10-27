@@ -233,7 +233,15 @@ final class MacIslandWindowController {
     collapseTask?.cancel()
 
     if expanded {
-      applyFrame(expanded: true)
+      // `@Published` emits before storing the new value. Resizing the panel
+      // synchronously from this callback makes SwiftUI lay out the hosting view
+      // while `isExpanded` is still false, so the compact content stays on
+      // screen until another update arrives. Defer one run loop so the view
+      // sees the committed value.
+      DispatchQueue.main.async { [weak self] in
+        guard let self, self.state.isExpanded else { return }
+        self.applyFrame(expanded: true)
+      }
       return
     }
 
