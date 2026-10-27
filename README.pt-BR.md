@@ -62,8 +62,8 @@ da agenda, ações do sistema e o que mais merecer um relance.
   cheia (inclusive jogos borderless) e volta ao sair.
 - **Estados claros** — telas para permissão de Automação, Spotify fechado, nada
   tocando e erros inesperados.
-- **Menu bar completo** — mostrar/ocultar a ilha, abrir o Spotify, ir para o
-  timer, atualizar, abrir no login, sobre e sair.
+- **Menu bar completo** — mostrar/ocultar, expandir/recolher, abrir o Spotify,
+  ir para o timer, atualizar, abrir no login, sobre e sair.
 - **Inglês e português do Brasil** — segue o idioma do sistema.
 - **Sem ícone no Dock** — um utilitário focado na menu bar.
 - **Releases universais e notarizadas** — Apple Silicon e Intel, assinadas com

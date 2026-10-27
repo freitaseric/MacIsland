@@ -62,8 +62,8 @@ calendar events, system actions, and whatever else deserves a glance.
   (including borderless games) and comes back when you leave.
 - **Clear states** — helpful screens for missing Automation permission, Spotify
   closed, nothing playing, and unexpected errors.
-- **Menu bar companion** — show/hide the island, open Spotify, jump to the
-  timer, refresh, launch at login, about, and quit.
+- **Menu bar companion** — show/hide, expand/collapse, open Spotify, jump to
+  the timer, refresh, launch at login, about, and quit.
 - **English and Brazilian Portuguese** — follows your system language.
 - **No Dock icon** — a focused menu bar utility.
 - **Universal and notarized releases** — Apple Silicon and Intel, signed with

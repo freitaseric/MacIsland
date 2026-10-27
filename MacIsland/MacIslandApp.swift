@@ -17,6 +17,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
   private var timer: TimerService?
   private var statusItem: NSStatusItem?
   private var visibilityItem: NSMenuItem?
+  private var expansionItem: NSMenuItem?
   private var launchAtLoginItem: NSMenuItem?
 
   func applicationDidFinishLaunching(_ notification: Notification) {
@@ -75,6 +76,15 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     visibility.target = self
     menu.addItem(visibility)
     visibilityItem = visibility
+
+    let expansion = NSMenuItem(
+      title: L10n.menuExpandIsland,
+      action: #selector(toggleExpansion),
+      keyEquivalent: ""
+    )
+    expansion.target = self
+    menu.addItem(expansion)
+    expansionItem = expansion
 
     let open = NSMenuItem(
       title: L10n.menuOpenSpotify,
@@ -146,6 +156,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     visibilityItem?.title = (windowController?.isVisible ?? true)
       ? L10n.menuHideIsland
       : L10n.menuShowIsland
+    expansionItem?.title = (state?.isExpanded ?? false)
+      ? L10n.menuCollapseIsland
+      : L10n.menuExpandIsland
   }
 
   // MARK: - Actions
@@ -154,6 +167,20 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     guard let windowController else { return }
 
     windowController.setVisible(!windowController.isVisible)
+    updateMenuState()
+  }
+
+  @objc private func toggleExpansion() {
+    guard let state else { return }
+
+    windowController?.setVisible(true)
+
+    if state.isExpanded {
+      state.collapse()
+    } else {
+      state.expand()
+    }
+
     updateMenuState()
   }
 
@@ -166,6 +193,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
   }
 
   @objc private func showTimerFeature() {
+    windowController?.setVisible(true)
     state?.select(.timer)
     state?.expand()
   }

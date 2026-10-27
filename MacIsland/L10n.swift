@@ -192,6 +192,18 @@ nonisolated enum L10n {
     comment: "Menu item that hides the floating island"
   )
 
+  static let menuExpandIsland = String(
+    localized: "menu.expand_island",
+    defaultValue: "Expand island",
+    comment: "Menu item that expands the island"
+  )
+
+  static let menuCollapseIsland = String(
+    localized: "menu.collapse_island",
+    defaultValue: "Collapse island",
+    comment: "Menu item that collapses the island"
+  )
+
   static let menuShowIsland = String(
     localized: "menu.show_island",
     defaultValue: "Show island",
