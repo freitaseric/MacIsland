@@ -62,8 +62,7 @@ da agenda, ações do sistema e o que mais merecer um relance.
   você retorna à área de trabalho.
 - **Estados claros** — telas para permissão de Automação, Spotify fechado, nada
   tocando e erros inesperados.
-- **Menu bar completo** — mostrar/ocultar, expandir/recolher, abrir o Spotify,
-  ir para o timer, atualizar, abrir no login, sobre e sair.
+- **Menu bar enxuto** — mostrar/ocultar a ilha, abrir no login, sobre e sair.
 - **Inglês e português do Brasil** — segue o idioma do sistema.
 - **Sem ícone no Dock** — um utilitário focado na menu bar.
 - **Releases universais e notarizadas** — Apple Silicon e Intel, assinadas com
@@ -101,8 +100,7 @@ da agenda, ações do sistema e o que mais merecer um relance.
 2. Descompacte e arraste o **MacIsland.app** para `/Applications`.
 3. Abra o MacIsland. Na primeira execução, o macOS pergunta se o MacIsland pode
    controlar o Spotify — escolha **OK**.
-4. Clique na ilha compacta (ou no ícone de waveform na menu bar) para abrir o
-   player.
+4. Clique na ilha compacta para abrir o player.
 
 As releases oficiais são assinadas com um certificado Developer ID e
 notarizadas pela Apple. Se você compilar o app por conta própria, isso não é
@@ -113,8 +111,8 @@ necessário para uso local.
 - **Expandir / recolher**: clique na ilha compacta para expandir e no chevron
   no canto superior direito para recolher.
 - **Reprodução**: use os botões de anterior, play/pause e próxima.
-- **Ícone na menu bar**: mostrar/ocultar a ilha, abrir o Spotify, atualizar,
-  ativar **Abrir no login**, ver **Sobre** ou sair.
+- **Ícone na menu bar**: mostrar/ocultar a ilha, ativar **Abrir no login**, ver
+  **Sobre** ou sair.
 - **Abrir no login**: ative pela menu bar. O macOS pode pedir aprovação em
   **Ajustes do Sistema → Geral → Itens de Login**. O app funciona melhor quando
   está em `/Applications`.

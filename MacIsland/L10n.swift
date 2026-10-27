@@ -176,34 +176,10 @@ nonisolated enum L10n {
     comment: "Menu item that hides the floating island"
   )
 
-  static let menuExpandIsland = String(
-    localized: "menu.expand_island",
-    defaultValue: "Expand island",
-    comment: "Menu item that expands the island"
-  )
-
-  static let menuCollapseIsland = String(
-    localized: "menu.collapse_island",
-    defaultValue: "Collapse island",
-    comment: "Menu item that collapses the island"
-  )
-
   static let menuShowIsland = String(
     localized: "menu.show_island",
     defaultValue: "Show island",
     comment: "Menu item that shows the floating island"
-  )
-
-  static let menuOpenSpotify = String(
-    localized: "menu.open_spotify",
-    defaultValue: "Open Spotify",
-    comment: "Menu item that launches Spotify"
-  )
-
-  static let menuRefresh = String(
-    localized: "menu.refresh",
-    defaultValue: "Check again",
-    comment: "Menu item that refreshes Spotify data"
   )
 
   static let menuOpenAtLogin = String(
@@ -222,12 +198,6 @@ nonisolated enum L10n {
     localized: "menu.quit",
     defaultValue: "Quit MacIsland",
     comment: "Menu item that quits the app"
-  )
-
-  static let menuAppName = String(
-    localized: "menu.app_name",
-    defaultValue: "MacIsland",
-    comment: "App name shown as the menu title"
   )
 
   static let featureSpotify = String(
@@ -300,12 +270,6 @@ nonisolated enum L10n {
     localized: "timer.notification.body",
     defaultValue: "Your %d-minute timer is done.",
     comment: "Body of the local notification when a timer ends"
-  )
-
-  static let menuShowTimer = String(
-    localized: "menu.show_timer",
-    defaultValue: "Show Timer",
-    comment: "Menu item that switches the island to the timer feature"
   )
 
   static let buttonPrevious = String(

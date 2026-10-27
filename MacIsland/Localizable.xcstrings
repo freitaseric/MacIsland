@@ -460,57 +460,6 @@
         }
       }
     },
-    "menu.app_name" : {
-      "comment" : "App name shown as the menu title",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "MacIsland"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "MacIsland"
-          }
-        }
-      }
-    },
-    "menu.collapse_island" : {
-      "comment" : "Menu item that collapses the island",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Collapse island"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Recolher ilha"
-          }
-        }
-      }
-    },
-    "menu.expand_island" : {
-      "comment" : "Menu item that expands the island",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Expand island"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Expandir ilha"
-          }
-        }
-      }
-    },
     "menu.hide_island" : {
       "comment" : "Menu item that hides the floating island",
       "localizations" : {
@@ -545,23 +494,6 @@
         }
       }
     },
-    "menu.open_spotify" : {
-      "comment" : "Menu item that launches Spotify",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Open Spotify"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Abrir Spotify"
-          }
-        }
-      }
-    },
     "menu.quit" : {
       "comment" : "Menu item that quits the app",
       "localizations" : {
@@ -579,23 +511,6 @@
         }
       }
     },
-    "menu.refresh" : {
-      "comment" : "Menu item that refreshes Spotify data",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Check again"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Verificar novamente"
-          }
-        }
-      }
-    },
     "menu.show_island" : {
       "comment" : "Menu item that shows the floating island",
       "localizations" : {
@@ -609,23 +524,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mostrar ilha"
-          }
-        }
-      }
-    },
-    "menu.show_timer" : {
-      "comment" : "Menu item that switches the island to the timer feature",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Show Timer"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mostrar timer"
           }
         }
       }

@@ -62,8 +62,8 @@ calendar events, system actions, and whatever else deserves a glance.
   when you return to your desktop.
 - **Clear states** — helpful screens for missing Automation permission, Spotify
   closed, nothing playing, and unexpected errors.
-- **Menu bar companion** — show/hide, expand/collapse, open Spotify, jump to
-  the timer, refresh, launch at login, about, and quit.
+- **Menu bar companion** — show/hide the island, launch at login, about, and
+  quit.
 - **English and Brazilian Portuguese** — follows your system language.
 - **No Dock icon** — a focused menu bar utility.
 - **Universal and notarized releases** — Apple Silicon and Intel, signed with
@@ -101,8 +101,7 @@ calendar events, system actions, and whatever else deserves a glance.
 2. Unzip it and drag **MacIsland.app** into `/Applications`.
 3. Open MacIsland. On first launch, macOS asks whether MacIsland may control
    Spotify — choose **OK**.
-4. Click the compact island (or the waveform icon in the menu bar) to open the
-   player.
+4. Click the compact island to open the player.
 
 Official releases are signed with a Developer ID certificate and notarized by
 Apple. If you build the app yourself, that is not required for local use.
@@ -112,8 +111,8 @@ Apple. If you build the app yourself, that is not required for local use.
 - **Expand / collapse**: click the compact island to expand, and the chevron in
   the top-right corner to collapse.
 - **Playback**: use the previous, play/pause, and next buttons.
-- **Menu bar icon**: show or hide the island, open Spotify, refresh, enable
-  **Open at Login**, open **About**, or quit.
+- **Menu bar icon**: show or hide the island, enable **Open at Login**, open
+  **About**, or quit.
 - **Open at Login**: enable it from the menu bar. macOS may ask you to approve
   MacIsland under **System Settings → General → Login Items**. The app works
   best when it lives in `/Applications`.

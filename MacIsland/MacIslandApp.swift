@@ -5,12 +5,10 @@ import SwiftUI
 @MainActor
 final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
   private var windowController: MacIslandWindowController?
-  private var state: MacIslandState?
   private var music: MusicService?
   private var timer: TimerService?
   private var statusItem: NSStatusItem?
   private var visibilityItem: NSMenuItem?
-  private var expansionItem: NSMenuItem?
   private var launchAtLoginItem: NSMenuItem?
 
   func applicationDidFinishLaunching(_ notification: Notification) {
@@ -25,7 +23,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
       timer: timer
     )
 
-    self.state = state
     self.music = music
     self.timer = timer
     windowController = controller
@@ -54,11 +51,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     let menu = NSMenu()
     menu.delegate = self
 
-    let title = NSMenuItem(title: L10n.menuAppName, action: nil, keyEquivalent: "")
-    title.isEnabled = false
-    menu.addItem(title)
-    menu.addItem(.separator())
-
     let visibility = NSMenuItem(
       title: L10n.menuHideIsland,
       action: #selector(toggleVisibility),
@@ -67,39 +59,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     visibility.target = self
     menu.addItem(visibility)
     visibilityItem = visibility
-
-    let expansion = NSMenuItem(
-      title: L10n.menuExpandIsland,
-      action: #selector(toggleExpansion),
-      keyEquivalent: ""
-    )
-    expansion.target = self
-    menu.addItem(expansion)
-    expansionItem = expansion
-
-    let open = NSMenuItem(
-      title: L10n.menuOpenSpotify,
-      action: #selector(openSpotify),
-      keyEquivalent: ""
-    )
-    open.target = self
-    menu.addItem(open)
-
-    let refresh = NSMenuItem(
-      title: L10n.menuRefresh,
-      action: #selector(refreshNow),
-      keyEquivalent: ""
-    )
-    refresh.target = self
-    menu.addItem(refresh)
-
-    let showTimer = NSMenuItem(
-      title: L10n.menuShowTimer,
-      action: #selector(showTimerFeature),
-      keyEquivalent: ""
-    )
-    showTimer.target = self
-    menu.addItem(showTimer)
 
     menu.addItem(.separator())
 
@@ -147,9 +106,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     visibilityItem?.title = (windowController?.isVisible ?? true)
       ? L10n.menuHideIsland
       : L10n.menuShowIsland
-    expansionItem?.title = (state?.isExpanded ?? false)
-      ? L10n.menuCollapseIsland
-      : L10n.menuExpandIsland
   }
 
   @objc private func toggleVisibility() {
@@ -157,34 +113,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     windowController.setVisible(!windowController.isVisible)
     updateMenuState()
-  }
-
-  @objc private func toggleExpansion() {
-    guard let state else { return }
-
-    windowController?.setVisible(true)
-
-    if state.isExpanded {
-      state.collapse()
-    } else {
-      state.expand()
-    }
-
-    updateMenuState()
-  }
-
-  @objc private func openSpotify() {
-    music?.openSpotify()
-  }
-
-  @objc private func refreshNow() {
-    music?.retry()
-  }
-
-  @objc private func showTimerFeature() {
-    windowController?.setVisible(true)
-    state?.select(.timer)
-    state?.expand()
   }
 
   @objc private func toggleLaunchAtLogin() {
