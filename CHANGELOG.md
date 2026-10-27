@@ -12,6 +12,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Simplified the menu bar menu to show/hide the island, Open at Login, About,
   and Quit. Redundant Spotify, timer, refresh, and expand/collapse commands
   were removed because the island exposes those actions directly.
+- The menu bar icon now shows the MacIsland logo instead of a generic waveform
+  symbol. It ships as a vector template image, so macOS tints it automatically
+  for light and dark menu bars.
 
 <!-- 1.0.1 is a source-only hotfix: no tag or GitHub release until the app can be notarized. -->
 ## [1.0.1] - 2026-10-27

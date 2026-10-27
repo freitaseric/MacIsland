@@ -40,12 +40,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
   private func setupStatusItem() {
     let item = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
 
-    if let button = item.button {
-      button.image = NSImage(
-        systemSymbolName: "waveform",
-        accessibilityDescription: "MacIsland"
-      )
-      button.image?.isTemplate = true
+    if let button = item.button, let icon = NSImage(named: "StatusIcon") {
+      icon.isTemplate = true
+      icon.accessibilityDescription = "MacIsland"
+      button.image = icon
     }
 
     let menu = NSMenu()
