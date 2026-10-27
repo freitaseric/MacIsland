@@ -1,15 +1,15 @@
 import Foundation
 
 enum IslandFeature: String, CaseIterable, Identifiable {
-    case spotify
+    case media
     case timer
 
     var id: String { rawValue }
 
     var title: String {
         switch self {
-        case .spotify:
-            L10n.featureSpotify
+        case .media:
+            L10n.featureMedia
         case .timer:
             L10n.featureTimer
         }
@@ -17,8 +17,8 @@ enum IslandFeature: String, CaseIterable, Identifiable {
 
     var symbolName: String {
         switch self {
-        case .spotify:
-            "music.note"
+        case .media:
+            "play.rectangle"
         case .timer:
             "timer"
         }

@@ -128,8 +128,8 @@ jobs:
 
           codesign --verify --deep --strict --verbose=2 "$APP_PATH"
           lipo -info "$APP_PATH/Contents/MacOS/MacIsland"
-          codesign -d --entitlements :- "$APP_PATH" > "$RUNNER_TEMP/entitlements.plist"
-          grep -q "com.apple.security.automation.apple-events" "$RUNNER_TEMP/entitlements.plist"
+          codesign --verify --strict --verbose=2 "$APP_PATH/Contents/Frameworks/MediaRemoteAdapter.framework"
+          test -f "$APP_PATH/Contents/Resources/mediaremote-adapter.pl"
 
           ditto -c -k --keepParent "$APP_PATH" "$RUNNER_TEMP/MacIsland-notarize.zip"
 

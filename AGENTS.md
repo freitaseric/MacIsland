@@ -3,7 +3,7 @@
 ## Project Context
 MacIsland is a native macOS app that brings Dynamic Island-inspired functionality to MacBook notches. It is built with Swift, SwiftUI, and AppKit, targeting macOS exclusively.
 
-The app integrates with other applications through native macOS APIs, including AppleScript for Spotify playback state.
+The app reads the system Now Playing session through a bundled MediaRemote adapter to display and control playback from any media app.
 
 ## Development Guidelines
 - Follow native macOS conventions and existing project patterns.
@@ -17,7 +17,7 @@ The app integrates with other applications through native macOS APIs, including 
 Do not modify the project structure or the following files without the user's explicit approval:
 
 - `Config/`, `MacIsland.xcodeproj/`, `Assets.xcassets/`
-- `InfoPlist.xcstrings`, `Localizable.xcstrings`, `MacIsland.entitlements`
+- `InfoPlist.xcstrings`, `Localizable.xcstrings`
 - `MacIslandApp.swift`, `MacIslandState.swift`, `MacIslandView.swift`, `MacIslandWindowController.swift`, `IslandFeature.swift`
 
 This restriction includes moving, renaming, deleting, or changing protected files. Inspect existing implementations before proposing changes.

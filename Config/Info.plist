@@ -30,8 +30,6 @@
 	<true/>
 	<key>LSUIElement</key>
 	<true/>
-	<key>NSAppleEventsUsageDescription</key>
-	<string>MacIsland uses automation to show and control what's playing on Spotify.</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2026 Eric Freitas Sampaio.</string>
 </dict>

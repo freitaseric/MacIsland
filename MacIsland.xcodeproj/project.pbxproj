@@ -6,7 +6,16 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		A10000000000000000000004 /* MediaRemoteAdapter.framework in Embed MediaRemoteAdapter */ = {isa = PBXBuildFile; fileRef = A10000000000000000000002 /* MediaRemoteAdapter.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		A10000000000000000000005 /* mediaremote-adapter.pl in Copy MediaRemoteAdapter Files */ = {isa = PBXBuildFile; fileRef = A10000000000000000000003 /* mediaremote-adapter.pl */; };
+		A10000000000000000000009 /* MediaRemoteAdapter.LICENSE in Copy MediaRemoteAdapter Files */ = {isa = PBXBuildFile; fileRef = A10000000000000000000008 /* MediaRemoteAdapter.LICENSE */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
+		A10000000000000000000002 /* MediaRemoteAdapter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MediaRemoteAdapter.framework; sourceTree = "<group>"; };
+		A10000000000000000000003 /* mediaremote-adapter.pl */ = {isa = PBXFileReference; lastKnownFileType = text.script.perl; path = mediaremote-adapter.pl; sourceTree = "<group>"; };
+		A10000000000000000000008 /* MediaRemoteAdapter.LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = MediaRemoteAdapter.LICENSE; sourceTree = "<group>"; };
 		BE7DD54F308F9FC700C78313 /* MacIsland.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MacIsland.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -17,6 +26,32 @@
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		A10000000000000000000006 /* Embed MediaRemoteAdapter */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				A10000000000000000000004 /* MediaRemoteAdapter.framework in Embed MediaRemoteAdapter */,
+			);
+			name = "Embed MediaRemoteAdapter";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A10000000000000000000007 /* Copy MediaRemoteAdapter Files */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 7;
+			files = (
+				A10000000000000000000005 /* mediaremote-adapter.pl in Copy MediaRemoteAdapter Files */,
+				A10000000000000000000009 /* MediaRemoteAdapter.LICENSE in Copy MediaRemoteAdapter Files */,
+			);
+			name = "Copy MediaRemoteAdapter Files";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		BE7DD54C308F9FC700C78313 /* Frameworks */ = {
@@ -31,8 +66,19 @@
 			isa = PBXGroup;
 			children = (
 				BE7DD551308F9FC700C78313 /* MacIsland */,
+				A10000000000000000000001 /* Vendor */,
 				BE7DD550308F9FC700C78313 /* Products */,
 			);
+			sourceTree = "<group>";
+		};
+		A10000000000000000000001 /* Vendor */ = {
+			isa = PBXGroup;
+			children = (
+				A10000000000000000000002 /* MediaRemoteAdapter.framework */,
+				A10000000000000000000003 /* mediaremote-adapter.pl */,
+				A10000000000000000000008 /* MediaRemoteAdapter.LICENSE */,
+			);
+			path = Vendor;
 			sourceTree = "<group>";
 		};
 		BE7DD550308F9FC700C78313 /* Products */ = {
@@ -53,6 +99,8 @@
 				BE7DD54B308F9FC700C78313 /* Sources */,
 				BE7DD54C308F9FC700C78313 /* Frameworks */,
 				BE7DD54D308F9FC700C78313 /* Resources */,
+				A10000000000000000000006 /* Embed MediaRemoteAdapter */,
+				A10000000000000000000007 /* Copy MediaRemoteAdapter Files */,
 			);
 			buildRules = (
 			);
@@ -241,7 +289,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = MacIsland/MacIsland.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 2;
@@ -272,7 +319,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = MacIsland/MacIsland.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 2;

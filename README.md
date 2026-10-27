@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-  <strong>A dynamic island for your Mac. Music, timers, and more.</strong>
+  <strong>A dynamic island for your Mac. Media, timers, and more.</strong>
 </p>
 
 <p align="center">
@@ -25,43 +25,42 @@
 
 MacIsland makes the area around your MacBook's notch useful. The island is the
 product: a small, always-there surface for the things you need at a glance.
-Version 1 combines a polished Spotify player with a focus timer, and the
-island is built to host more integrations over time.
+Version 1 combines a polished media player with a focus timer, and the island is
+built to host more integrations over time.
 
-Built with SwiftUI and a borderless `NSPanel` that sits above the menu bar.
-No accounts, no analytics, no Spotify login: just the Spotify app you already
-have.
+Built with SwiftUI and a borderless `NSPanel` that sits above the menu bar. No
+accounts and no analytics: it reads the media your Mac is already playing.
 
 ## The idea
 
 The notch is always in view. MacIsland gives it a purpose beyond a camera
-cutout. Today it's music and focus timers; the same surface can grow into
+cutout. Today it's media and focus timers; the same surface can grow into
 calendar events, system actions, and whatever else deserves a glance.
 
 ## Features
 
 - **Notch-native layout** — the black surface blends into the notch and expands
   into a compact player card.
-- **Made to grow** — the island is the product, not a single-purpose music
-  widget. Spotify is the first integration, not the ceiling.
+- **Made to grow** — the island is the product, not a single-purpose player
+  widget. Media is the first integration, not the ceiling.
 - **Focus timer** — 5, 15, and 25-minute presets with start, pause, reset, and a
   local notification when the countdown ends.
-- **Feature switcher** — move between Spotify and the timer without leaving the
+- **Feature switcher** — move between Media and the timer without leaving the
   island.
-- **Now playing at a glance** — album artwork, title, artist, album, elapsed
-  time, and duration.
-- **Playback controls** — play/pause, previous, and next with optimistic UI
-  updates.
-- **Looks after itself** — refreshes automatically when Spotify opens, quits,
-  changes track, or is paused.
+- **Now playing at a glance** — artwork, title, artist, album, elapsed time, and
+  duration from any app or website that publishes to macOS.
+- **Playback controls** — play/pause everywhere; previous and next whenever the
+  source supports them.
+- **Looks after itself** — follows the active media session and updates when
+  playback starts, pauses, or changes.
 - **Hover, Escape, and click-outside** — expand on hover, collapse with Escape,
   or click away. Click still works too.
-- **Smooth progress** — interpolated between Spotify polls instead of jumping
-  every two seconds.
+- **Smooth progress** — interpolated between two-second polls instead of jumping
+  on every update.
 - **Out of the way** — stays out of native full-screen apps and comes back
   when you return to your desktop.
-- **Clear states** — helpful screens for missing Automation permission, Spotify
-  closed, nothing playing, and unexpected errors.
+- **Clear states** — helpful screens for nothing playing, unavailable media
+  controls, and unexpected errors.
 - **Menu bar companion** — show/hide the island, launch at login, about, and
   quit.
 - **English and Brazilian Portuguese** — follows your system language.
@@ -79,14 +78,12 @@ calendar events, system actions, and whatever else deserves a glance.
   <img src="docs/preview-timer.png" width="760" alt="MacIsland focus timer with presets and controls">
 </p>
 
-<p align="center">
-  <img src="docs/preview-permission.png" width="760" alt="MacIsland requesting Automation permission">
-</p>
-
 ## Requirements
 
 - macOS **14 Sonoma** or later.
-- The **Spotify desktop app** installed and signed in.
+- Media from any app or website that publishes to the macOS Now Playing session,
+  such as Spotify, Apple Music, Podcasts, Safari (YouTube, Netflix, Instagram),
+  or Chrome.
 - A MacBook with a notch for the intended look. On other displays, MacIsland
   becomes a floating pill just below the menu bar.
 - Apple Silicon or Intel Mac.
@@ -99,9 +96,7 @@ calendar events, system actions, and whatever else deserves a glance.
 1. Download the latest `MacIsland-x.y.z.zip` from
    [Releases](https://github.com/freitaseric/MacIsland/releases).
 2. Unzip it and drag **MacIsland.app** into `/Applications`.
-3. Open MacIsland. On first launch, macOS asks whether MacIsland may control
-   Spotify — choose **OK**.
-4. Click the compact island to open the player.
+3. Open MacIsland and click the compact island to open the player.
 
 Official releases are signed with a Developer ID certificate and notarized by
 Apple. If you build the app yourself, that is not required for local use.
@@ -110,7 +105,8 @@ Apple. If you build the app yourself, that is not required for local use.
 
 - **Expand / collapse**: click the compact island to expand, and the chevron in
   the top-right corner to collapse.
-- **Playback**: use the previous, play/pause, and next buttons.
+- **Playback**: use play/pause; previous and next appear when the current source
+  supports track navigation.
 - **Menu bar icon**: show or hide the island, enable **Open at Login**, open
   **About**, or quit.
 - **Open at Login**: enable it from the menu bar. macOS may ask you to approve
@@ -121,22 +117,15 @@ Apple. If you build the app yourself, that is not required for local use.
 - **Full-screen apps**: the island hides automatically while another app is in
   full-screen and returns when you leave it.
 
-## Automation permission
+## Supported media
 
-MacIsland talks to Spotify through AppleScript, so macOS requires your
-permission once:
+MacIsland reads the system Now Playing session, so it works with any app or
+website that publishes media to macOS: Spotify, Apple Music, Podcasts, Safari
+(YouTube, Netflix, Instagram), Chrome, and others.
 
-**System Settings → Privacy & Security → Automation → MacIsland → Spotify.**
-
-If the island shows **Permission needed**, click **Open Settings** and enable
-Spotify for MacIsland.
-
-If the prompt never appears, quit the app, reset the permission, and open it
-again:
-
-```bash
-tccutil reset AppleEvents com.freitaseric.MacIsland
-```
+What appears depends on the source. Title, artwork, and play/pause are common;
+artist, album, duration, position, and previous/next are shown when the source
+provides them. No Automation permission is required.
 
 ## Build from source
 
@@ -155,9 +144,8 @@ In Xcode:
 2. Choose your team (or **Sign to Run Locally** if you just want to run it).
 3. Press **Run**.
 
-The Apple Events entitlement is already configured in
-`MacIsland/MacIsland.entitlements`, and the usage description is in
-`Config/Info.plist` plus the localized `MacIsland/InfoPlist.xcstrings`.
+The `Vendor` folder contains the prebuilt universal adapter and its license, so
+no extra setup is required.
 
 Command-line build:
 
@@ -176,29 +164,39 @@ xcodebuild \
   and is anchored to the top edge of the screen.
 - `NSScreen.auxiliaryTopLeftArea` / `safeAreaInsets` detect the notch and the
   menu bar height, so the island can grow downward from the notch.
-- A `MusicService` polls Spotify through `NSAppleScript` every two seconds,
-  parsing a typed AppleScript record with the track, artwork URL, playback
-  state, duration, and position.
-- Playback commands are sent with `playpause`, `next track`, and
-  `previous track`, with optimistic UI state and a refresh after each command.
-- The app is not sandboxed because it needs to send Apple Events to Spotify.
-  It uses the Hardened Runtime with the
-  `com.apple.security.automation.apple-events` entitlement.
+- A `MediaService` polls the system Now Playing session every two seconds through
+  a bundled, dynamically loaded adapter, reading title, artist, album, artwork,
+  playback state, duration, and position.
+- Playback commands are sent through the same system channel used by the media
+  keys, with optimistic UI state and a refresh after each command.
+- The app is not sandboxed. It uses the Hardened Runtime and does not request
+  Automation access.
+
+Because macOS 15.4 and later only answer Apple-signed processes, MacIsland
+bundles the BSD-3-licensed
+[mediaremote-adapter](https://github.com/ungive/mediaremote-adapter) and loads
+it through `/usr/bin/perl`. The license ships with the app and is also available
+in `Vendor/MediaRemoteAdapter.LICENSE`.
 
 ## Privacy
 
 - No accounts, analytics, telemetry, or tracking.
-- No Spotify credentials are read or stored.
-- Network access is only used to load album artwork from Spotify's image CDN.
-- The only system permissions are **Automation** (Spotify) and **notifications**
-  (requested only when you start the timer).
+- No credentials are read or stored.
+- Media metadata is read locally from the system Now Playing session; artwork
+  comes from the app that owns the session.
+- The only system permission is **notifications** (requested only when you
+  start the timer).
 - The source is open — you can audit every line.
 
 ## Known limitations
 
-- Version 1 ships two integrations: Spotify and a focus timer. There is no
-  plugin system for third-party features yet.
-- Spotify is the only music source.
+- Version 1 ships two integrations: media and a focus timer. There is no plugin
+  system for third-party features yet.
+- Media support depends on what each app or website publishes to the system Now
+  Playing session. Some sources expose only a title and play/pause, and DRM
+  streams may omit metadata.
+- The Now Playing integration uses a private macOS framework, so it can change
+  or stop working in a future macOS release.
 - The focus timer stops if the app quits.
 - No automatic updates yet.
 - Distributed outside the Mac App Store, so the app runs without the App
@@ -210,7 +208,7 @@ xcodebuild \
 
 - More integrations: focus modes, calendar events, and system actions.
 - A small integration surface for third-party actions.
-- More music sources, including Apple Music.
+- Richer media source metadata and explicit source switching.
 - Timer history and persistence across app restarts.
 - Auto-updates with Sparkle.
 - Homebrew Cask.

@@ -1,9 +1,10 @@
+import AppKit
 import Foundation
 import SwiftUI
 
 struct MacIslandView: View {
   @ObservedObject var state: MacIslandState
-  @ObservedObject var music: MusicService
+  @ObservedObject var media: MediaService
   @ObservedObject var timer: TimerService
 
   private var isExpanded: Bool { state.isExpanded }
@@ -92,8 +93,8 @@ struct MacIslandView: View {
   private var compactIsland: some View {
     Group {
       switch state.activeFeature {
-      case .spotify:
-        spotifyCompactContent
+      case .media:
+        mediaCompactContent
       case .timer:
         TimerCompactView(timer: timer)
       }
@@ -112,8 +113,8 @@ struct MacIslandView: View {
 
       Group {
         switch state.activeFeature {
-        case .spotify:
-          spotifyExpandedContent
+        case .media:
+          mediaExpandedContent
         case .timer:
           TimerExpandedView(timer: timer)
         }
@@ -165,10 +166,10 @@ struct MacIslandView: View {
     .frame(maxWidth: .infinity, alignment: .center)
   }
 
-  private var spotifyCompactContent: some View {
+  private var mediaCompactContent: some View {
     HStack(spacing: 8) {
       ArtworkView(
-        url: music.track?.artworkURL,
+        data: media.item?.artworkData,
         size: 24,
         cornerRadius: 7
       )
@@ -186,19 +187,19 @@ struct MacIslandView: View {
 
       Spacer(minLength: 0)
 
-      EqualizerBars(isPlaying: music.track?.isPlaying ?? false)
+      EqualizerBars(isPlaying: media.item?.isPlaying ?? false)
     }
     .frame(maxWidth: .infinity, alignment: .leading)
     .frame(height: 24)
   }
 
   @ViewBuilder
-  private var spotifyExpandedContent: some View {
+  private var mediaExpandedContent: some View {
     Group {
-      switch music.status {
+      switch media.status {
       case .ready:
         playerContent
-      case .idle, .loading:
+      case .idle:
         statusMessage(
           icon: "arrow.triangle.2.circlepath",
           tint: .white.opacity(0.65),
@@ -207,34 +208,23 @@ struct MacIslandView: View {
           primaryTitle: nil,
           primaryAction: nil
         )
-      case .spotifyNotRunning:
+      case .noMedia:
         statusMessage(
-          icon: "music.note",
-          tint: .green,
-          title: L10n.spotifyClosedTitle,
-          message: L10n.spotifyClosedMessage,
-          primaryTitle: L10n.buttonOpenSpotify,
-          primaryAction: { music.openSpotify() }
-        )
-      case .noTrack:
-        statusMessage(
-          icon: "pause.circle",
+          icon: "play.slash",
           tint: .white.opacity(0.65),
           title: L10n.nothingPlayingTitle,
           message: L10n.nothingPlayingMessage,
-          primaryTitle: L10n.buttonOpenSpotify,
-          primaryAction: { music.openSpotify() }
+          primaryTitle: nil,
+          primaryAction: nil
         )
-      case .automationDenied:
+      case .unavailable:
         statusMessage(
-          icon: "lock.fill",
+          icon: "play.slash",
           tint: .orange,
-          title: L10n.permissionTitle,
-          message: L10n.permissionMessage,
-          primaryTitle: L10n.buttonOpenSettings,
-          primaryAction: { music.openAutomationSettings() },
-          secondaryTitle: L10n.buttonCheckAgain,
-          secondaryAction: { music.retry() }
+          title: L10n.readErrorTitle,
+          message: L10n.readErrorUnavailable,
+          primaryTitle: nil,
+          primaryAction: nil
         )
       case .failed(let message):
         statusMessage(
@@ -243,7 +233,7 @@ struct MacIslandView: View {
           title: L10n.readErrorTitle,
           message: message,
           primaryTitle: L10n.buttonTryAgain,
-          primaryAction: { music.retry() }
+          primaryAction: { media.retry() }
         )
       }
     }
@@ -254,23 +244,23 @@ struct MacIslandView: View {
     VStack(spacing: 0) {
       HStack(spacing: 10) {
         ArtworkView(
-          url: music.track?.artworkURL,
+          data: media.item?.artworkData,
           size: 52,
           cornerRadius: 10
         )
 
         VStack(alignment: .leading, spacing: 3) {
-          Text(music.track?.title ?? "Spotify")
+          Text(media.item?.title ?? L10n.featureMedia)
             .font(.system(size: 13, weight: .semibold))
             .lineLimit(1)
 
-          Text(music.track?.artist ?? "")
+          Text(media.item?.artist ?? "")
             .font(.system(size: 10.5, weight: .medium))
             .foregroundStyle(.white.opacity(0.62))
             .lineLimit(1)
 
-          if let album = music.track?.album, !album.isEmpty {
-            Text(album)
+          if let detailLine {
+            Text(detailLine)
               .font(.system(size: 9))
               .foregroundStyle(.white.opacity(0.38))
               .lineLimit(1)
@@ -290,15 +280,23 @@ struct MacIslandView: View {
     .frame(maxWidth: .infinity, alignment: .leading)
   }
 
+  private var detailLine: String? {
+    guard let item = media.item else { return nil }
+    if !item.album.isEmpty {
+      return item.album
+    }
+    return item.source.name.isEmpty ? nil : item.source.name
+  }
+
   private var progressRow: some View {
     TimelineView(
       .animation(
         minimumInterval: 0.5,
-        paused: !(music.track?.isPlaying ?? false)
+        paused: !(media.item?.isPlaying ?? false)
       )
     ) { timeline in
-      let position = music.position(at: timeline.date)
-      let duration = music.track?.duration ?? 0
+      let position = media.position(at: timeline.date)
+      let duration = media.item?.duration ?? 0
       let progress =
         duration > 0
         ? min(max(position / duration, 0), 1)
@@ -322,7 +320,7 @@ struct MacIslandView: View {
         HStack(spacing: 4) {
           Text(IslandTime.label(position))
           Spacer(minLength: 0)
-          Text(IslandTime.label(duration))
+          Text(duration > 0 ? IslandTime.label(duration) : "--:--")
         }
         .font(.system(size: 9, weight: .medium).monospacedDigit())
         .foregroundStyle(.white.opacity(0.38))
@@ -334,21 +332,23 @@ struct MacIslandView: View {
     HStack(spacing: 0) {
       Spacer(minLength: 0)
 
-      mediaButton(
-        "backward.fill",
-        size: 15,
-        label: L10n.buttonPrevious
-      ) {
-        music.previous()
+      if media.canSkip {
+        mediaButton(
+          "backward.fill",
+          size: 15,
+          label: L10n.buttonPrevious
+        ) {
+          media.previous()
+        }
+
+        Spacer().frame(width: 26)
       }
 
-      Spacer().frame(width: 26)
-
       Button {
-        music.togglePlayback()
+        media.togglePlayback()
       } label: {
         Image(
-          systemName: (music.track?.isPlaying ?? false)
+          systemName: (media.item?.isPlaying ?? false)
             ? "pause.fill"
             : "play.fill"
         )
@@ -357,27 +357,29 @@ struct MacIslandView: View {
         .background(.white.opacity(0.14), in: Circle())
       }
       .buttonStyle(.plain)
-      .disabled(!music.canControl)
+      .disabled(!media.canControl)
       .accessibilityLabel(
-        (music.track?.isPlaying ?? false)
+        (media.item?.isPlaying ?? false)
           ? L10n.buttonPause
           : L10n.buttonPlay
       )
 
-      Spacer().frame(width: 26)
+      if media.canSkip {
+        Spacer().frame(width: 26)
 
-      mediaButton(
-        "forward.fill",
-        size: 15,
-        label: L10n.buttonNext
-      ) {
-        music.next()
+        mediaButton(
+          "forward.fill",
+          size: 15,
+          label: L10n.buttonNext
+        ) {
+          media.next()
+        }
       }
 
       Spacer(minLength: 0)
     }
     .frame(height: 38)
-    .opacity(music.canControl ? 1 : 0.45)
+    .opacity(media.canControl ? 1 : 0.45)
   }
 
   private func statusMessage(
@@ -386,9 +388,7 @@ struct MacIslandView: View {
     title: String,
     message: String,
     primaryTitle: String?,
-    primaryAction: (() -> Void)?,
-    secondaryTitle: String? = nil,
-    secondaryAction: (() -> Void)? = nil
+    primaryAction: (() -> Void)?
   ) -> some View {
     VStack(spacing: 7) {
       Image(systemName: icon)
@@ -405,32 +405,18 @@ struct MacIslandView: View {
         .fixedSize(horizontal: false, vertical: true)
         .frame(maxWidth: 300)
 
-      HStack(spacing: 8) {
-        if let primaryTitle, let primaryAction {
-          Button(action: primaryAction) {
-            Text(primaryTitle)
-              .font(.system(size: 10, weight: .semibold))
-              .foregroundStyle(.black.opacity(0.85))
-              .padding(.horizontal, 12)
-              .frame(height: 24)
-              .background(.green, in: Capsule())
-          }
-          .buttonStyle(.plain)
+      if let primaryTitle, let primaryAction {
+        Button(action: primaryAction) {
+          Text(primaryTitle)
+            .font(.system(size: 10, weight: .semibold))
+            .foregroundStyle(.black.opacity(0.85))
+            .padding(.horizontal, 12)
+            .frame(height: 24)
+            .background(.green, in: Capsule())
         }
-
-        if let secondaryTitle, let secondaryAction {
-          Button(action: secondaryAction) {
-            Text(secondaryTitle)
-              .font(.system(size: 10, weight: .semibold))
-              .foregroundStyle(.white.opacity(0.8))
-              .padding(.horizontal, 12)
-              .frame(height: 24)
-              .background(.white.opacity(0.1), in: Capsule())
-          }
-          .buttonStyle(.plain)
-        }
+        .buttonStyle(.plain)
+        .padding(.top, 10)
       }
-      .padding(.top, 2)
     }
     .frame(maxWidth: .infinity)
   }
@@ -462,40 +448,33 @@ struct MacIslandView: View {
         .contentShape(Rectangle())
     }
     .buttonStyle(.plain)
-    .disabled(!music.canControl)
+    .disabled(!media.canControl)
     .accessibilityLabel(label)
   }
 
   private var compactTitle: String {
-    switch music.status {
+    switch media.status {
     case .ready:
-      return music.track?.title ?? "Spotify"
-    case .automationDenied:
-      return L10n.compactNoPermission
-    case .spotifyNotRunning:
-      return L10n.compactSpotifyClosed
-    case .noTrack:
+      return media.item?.title ?? L10n.featureMedia
+    case .noMedia:
       return L10n.compactNothingPlaying
-    case .failed:
+    case .unavailable, .failed:
       return L10n.compactUnavailable
-    case .idle, .loading:
+    case .idle:
       return L10n.compactConnecting
     }
   }
 
   private var compactSubtitle: String {
-    switch music.status {
+    switch media.status {
     case .ready:
-      return music.track?.artist ?? "Spotify"
-    case .automationDenied:
-      return L10n.compactPermissionHint
-    case .spotifyNotRunning:
-      return L10n.compactOpenHint
-    case .noTrack:
-      return "Spotify"
-    case .failed:
+      guard let item = media.item else { return L10n.compactAppName }
+      return item.artist.isEmpty ? item.source.name : item.artist
+    case .noMedia:
+      return L10n.compactPlayHint
+    case .unavailable, .failed:
       return L10n.compactErrorHint
-    case .idle, .loading:
+    case .idle:
       return L10n.compactAppName
     }
   }
@@ -530,7 +509,7 @@ struct IslandShape: Shape {
 }
 
 private struct ArtworkView: View {
-  let url: URL?
+  let data: Data?
   let size: CGFloat
   let cornerRadius: CGFloat
 
@@ -543,20 +522,10 @@ private struct ArtworkView: View {
         .font(.system(size: size * 0.36, weight: .semibold))
         .foregroundStyle(.green)
 
-      if let url {
-        AsyncImage(
-          url: url,
-          transaction: Transaction(animation: .easeInOut(duration: 0.18))
-        ) { phase in
-          if case .success(let image) = phase {
-            image
-              .resizable()
-              .scaledToFill()
-              .transition(.opacity)
-          } else {
-            Color.clear
-          }
-        }
+      if let data, let image = NSImage(data: data) {
+        Image(nsImage: image)
+          .resizable()
+          .scaledToFill()
       }
     }
     .frame(width: size, height: size)

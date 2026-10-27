@@ -5,7 +5,7 @@ import SwiftUI
 @MainActor
 final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
   private var windowController: MacIslandWindowController?
-  private var music: MusicService?
+  private var media: MediaService?
   private var timer: TimerService?
   private var statusItem: NSStatusItem?
   private var visibilityItem: NSMenuItem?
@@ -15,25 +15,25 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     NSApp.setActivationPolicy(.accessory)
 
     let state = MacIslandState()
-    let music = MusicService()
+    let media = MediaService()
     let timer = TimerService()
     let controller = MacIslandWindowController(
       state: state,
-      music: music,
+      media: media,
       timer: timer
     )
 
-    self.music = music
+    self.media = media
     self.timer = timer
     windowController = controller
 
     setupStatusItem()
     controller.show()
-    music.start()
+    media.start()
   }
 
   func applicationWillTerminate(_ notification: Notification) {
-    music?.stop()
+    media?.stop()
     timer?.stop()
   }
 

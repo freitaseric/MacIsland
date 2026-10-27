@@ -7,8 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Media integration backed by the macOS Now Playing session. It works with
+  Spotify, Apple Music, Podcasts, Safari (YouTube, Netflix, Instagram), Chrome,
+  and any other app that publishes media to the system. Direct access is
+  provided by the bundled BSD-3-licensed `mediaremote-adapter`, loaded through
+  `/usr/bin/perl` because macOS 15.4+ restricts direct MediaRemote access.
+- Playback controls now use the same system channel as the media keys, with
+  previous/next shown only when the current source supports them.
+
 ### Changed
 
+- Renamed the Spotify feature to Media throughout the app, including the feature
+  picker, service, models, statuses, and localization.
+- Removed the AppleScript integration and the Automation permission prompt;
+  media metadata is read locally from the system Now Playing session.
+- Removed the unused Apple Events automation entitlement and its usage
+  description from the app and Xcode project.
 - Simplified the menu bar menu to show/hide the island, Open at Login, About,
   and Quit. Redundant Spotify, timer, refresh, and expand/collapse commands
   were removed because the island exposes those actions directly.

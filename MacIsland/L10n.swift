@@ -4,110 +4,62 @@ nonisolated enum L10n {
 
   static let connectingTitle = String(
     localized: "status.connecting.title",
-    defaultValue: "Connecting to Spotify",
-    comment: "Expanded island title while waiting for Spotify data"
+    defaultValue: "Connecting to media",
+    comment: "Expanded island title while waiting for the current media session"
   )
 
   static let connectingMessage = String(
     localized: "status.connecting.message",
-    defaultValue: "Waiting for permission and the current track…",
-    comment: "Expanded island message while waiting for Spotify"
-  )
-
-  static let spotifyClosedTitle = String(
-    localized: "status.spotify_closed.title",
-    defaultValue: "Spotify isn't open",
-    comment: "Title shown when Spotify is not running"
-  )
-
-  static let spotifyClosedMessage = String(
-    localized: "status.spotify_closed.message",
-    defaultValue: "Open Spotify to control your music from here.",
-    comment: "Message shown when Spotify is not running"
+    defaultValue: "Waiting for media to play…",
+    comment: "Expanded island message while waiting for media"
   )
 
   static let nothingPlayingTitle = String(
     localized: "status.nothing_playing.title",
     defaultValue: "Nothing playing",
-    comment: "Title shown when Spotify is open but no track is playing"
+    comment: "Title shown when no media session is active"
   )
 
   static let nothingPlayingMessage = String(
     localized: "status.nothing_playing.message",
-    defaultValue: "Play a song in Spotify to see the details.",
-    comment: "Message shown when Spotify is open but nothing is playing"
-  )
-
-  static let permissionTitle = String(
-    localized: "status.permission.title",
-    defaultValue: "Permission needed",
-    comment: "Title shown when Automation permission is denied"
-  )
-
-  static let permissionMessage = String(
-    localized: "status.permission.message",
-    defaultValue: "Allow MacIsland in System Settings › Privacy & Security › Automation.",
-    comment: "Instructions to grant Automation permission"
+    defaultValue: "Play a song or video in any app to see it here.",
+    comment: "Message shown when no media session is active"
   )
 
   static let readErrorTitle = String(
     localized: "status.read_error.title",
-    defaultValue: "Couldn't read Spotify",
-    comment: "Title shown when reading Spotify fails"
-  )
-
-  static let readErrorTimeout = String(
-    localized: "status.read_error.timeout",
-    defaultValue: "Spotify took too long to respond. Try again.",
-    comment: "Message shown when Spotify times out"
-  )
-
-  static let readErrorMalformed = String(
-    localized: "status.read_error.malformed",
-    defaultValue: "Spotify returned an unexpected response.",
-    comment: "Message shown when Spotify returns malformed data"
+    defaultValue: "Couldn't read media",
+    comment: "Title shown when reading the current media session fails"
   )
 
   static let readErrorGeneric = String(
     localized: "status.read_error.generic",
-    defaultValue: "Couldn't talk to Spotify.",
-    comment: "Generic message when Spotify communication fails"
+    defaultValue: "Couldn't read the current media session.",
+    comment: "Generic message when reading the media session fails"
   )
 
-  static let compactNoPermission = String(
-    localized: "compact.no_permission",
-    defaultValue: "No permission",
-    comment: "Compact island title when Automation permission is denied"
-  )
-
-  static let compactPermissionHint = String(
-    localized: "compact.permission_hint",
-    defaultValue: "Click to authorize",
-    comment: "Compact island subtitle prompting the user to grant permission"
-  )
-
-  static let compactSpotifyClosed = String(
-    localized: "compact.spotify_closed",
-    defaultValue: "Spotify closed",
-    comment: "Compact island title when Spotify is not running"
-  )
-
-  static let compactOpenHint = String(
-    localized: "compact.open_hint",
-    defaultValue: "Click to open",
-    comment: "Compact island subtitle prompting the user to open Spotify"
+  static let readErrorUnavailable = String(
+    localized: "status.read_error.unavailable",
+    defaultValue: "Media controls aren't available on this macOS version.",
+    comment: "Message shown when the system media service is unavailable"
   )
 
   static let compactNothingPlaying = String(
     localized: "compact.nothing_playing",
     defaultValue: "Nothing playing",
-    comment: "Compact island title when no track is playing"
+    comment: "Compact island title when no media session is active"
+  )
+
+  static let compactPlayHint = String(
+    localized: "compact.play_hint",
+    defaultValue: "Play something",
+    comment: "Compact island subtitle prompting the user to play media"
   )
 
   static let compactUnavailable = String(
     localized: "compact.unavailable",
-    defaultValue: "Spotify unavailable",
-    comment: "Compact island title when Spotify can't be read"
+    defaultValue: "Media unavailable",
+    comment: "Compact island title when the media session can't be read"
   )
 
   static let compactErrorHint = String(
@@ -119,7 +71,7 @@ nonisolated enum L10n {
   static let compactConnecting = String(
     localized: "compact.connecting",
     defaultValue: "Connecting…",
-    comment: "Compact island title while connecting to Spotify"
+    comment: "Compact island title while connecting to the media session"
   )
 
   static let compactAppName = String(
@@ -128,28 +80,10 @@ nonisolated enum L10n {
     comment: "App name shown in the compact island"
   )
 
-  static let buttonOpenSpotify = String(
-    localized: "button.open_spotify",
-    defaultValue: "Open Spotify",
-    comment: "Button that launches Spotify"
-  )
-
-  static let buttonOpenSettings = String(
-    localized: "button.open_settings",
-    defaultValue: "Open Settings",
-    comment: "Button that opens Automation settings"
-  )
-
-  static let buttonCheckAgain = String(
-    localized: "button.check_again",
-    defaultValue: "Check again",
-    comment: "Button that retries reading Spotify"
-  )
-
   static let buttonTryAgain = String(
     localized: "button.try_again",
     defaultValue: "Try again",
-    comment: "Button that retries after an error"
+    comment: "Button that retries reading the media session"
   )
 
   static let buttonPlay = String(
@@ -200,10 +134,10 @@ nonisolated enum L10n {
     comment: "Menu item that quits the app"
   )
 
-  static let featureSpotify = String(
-    localized: "feature.spotify",
-    defaultValue: "Spotify",
-    comment: "Feature picker label for Spotify"
+  static let featureMedia = String(
+    localized: "feature.media",
+    defaultValue: "Media",
+    comment: "Feature picker label for media playback"
   )
 
   static let featureTimer = String(
@@ -286,7 +220,7 @@ nonisolated enum L10n {
 
   static let aboutCredits = String(
     localized: "about.credits",
-    defaultValue: "A dynamic island for your Mac.\nMusic, timers, and more to come. Not affiliated with Spotify or Apple.",
+    defaultValue: "A dynamic island for your Mac.\nMedia, timers, and more to come. Not affiliated with Spotify or Apple.",
     comment: "Credits shown in the About panel"
   )
 
@@ -306,17 +240,5 @@ nonisolated enum L10n {
     localized: "login_item.requires_approval",
     defaultValue: "Approve MacIsland in System Settings › General › Login Items.",
     comment: "Message when macOS requires approval for the login item"
-  )
-
-  static let errorAppleScriptCodeFormat = String(
-    localized: "error.applescript_code.format",
-    defaultValue: "AppleScript returned error %d.",
-    comment: "Fallback error message including an AppleScript error code"
-  )
-
-  static let errorNoResponse = String(
-    localized: "error.no_response",
-    defaultValue: "Spotify didn't return a response.",
-    comment: "Fallback error when Spotify returns no response"
   )
 }

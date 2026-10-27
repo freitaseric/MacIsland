@@ -25,23 +25,6 @@
         }
       }
     },
-    "NSAppleEventsUsageDescription" : {
-      "comment" : "Privacy - AppleEvents Sending Usage Description",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "MacIsland uses automation to show and control what's playing on Spotify."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "O MacIsland usa automação para mostrar e controlar o que está tocando no Spotify."
-          }
-        }
-      }
-    },
     "NSHumanReadableCopyright" : {
       "comment" : "Copyright (human-readable)",
       "extractionState" : "extracted_with_value",

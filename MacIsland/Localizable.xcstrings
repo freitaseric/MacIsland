@@ -7,30 +7,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "A dynamic island for your Mac.\nMusic, timers, and more to come. Not affiliated with Spotify or Apple."
+            "value" : "A dynamic island for your Mac.\nMedia, timers, and more to come. Not affiliated with Spotify or Apple."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Uma dynamic island para o seu Mac.\nMúsica, timers e mais por vir. Não afiliado ao Spotify ou à Apple."
-          }
-        }
-      }
-    },
-    "button.check_again" : {
-      "comment" : "Button that retries reading Spotify",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Check again"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Verificar"
+            "value" : "Uma dynamic island para o seu Mac.\nMídia, timers e mais por vir. Não afiliado ao Spotify ou à Apple."
           }
         }
       }
@@ -65,40 +48,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Próxima"
-          }
-        }
-      }
-    },
-    "button.open_settings" : {
-      "comment" : "Button that opens Automation settings",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Open Settings"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Abrir Ajustes"
-          }
-        }
-      }
-    },
-    "button.open_spotify" : {
-      "comment" : "Button that launches Spotify",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Open Spotify"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Abrir Spotify"
           }
         }
       }
@@ -155,7 +104,7 @@
       }
     },
     "button.try_again" : {
-      "comment" : "Button that retries after an error",
+      "comment" : "Button that retries reading the media session",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -189,7 +138,7 @@
       }
     },
     "compact.connecting" : {
-      "comment" : "Compact island title while connecting to Spotify",
+      "comment" : "Compact island title while connecting to the media session",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -222,25 +171,8 @@
         }
       }
     },
-    "compact.no_permission" : {
-      "comment" : "Compact island title when Automation permission is denied",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No permission"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sem permissão"
-          }
-        }
-      }
-    },
     "compact.nothing_playing" : {
-      "comment" : "Compact island title when no track is playing",
+      "comment" : "Compact island title when no media session is active",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -256,121 +188,53 @@
         }
       }
     },
-    "compact.open_hint" : {
-      "comment" : "Compact island subtitle prompting the user to open Spotify",
+    "compact.play_hint" : {
+      "comment" : "Compact island subtitle prompting the user to play media",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Click to open"
+            "value" : "Play something"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Clique para abrir"
-          }
-        }
-      }
-    },
-    "compact.permission_hint" : {
-      "comment" : "Compact island subtitle prompting the user to grant permission",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Click to authorize"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Clique para autorizar"
-          }
-        }
-      }
-    },
-    "compact.spotify_closed" : {
-      "comment" : "Compact island title when Spotify is not running",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Spotify closed"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Spotify fechado"
+            "value" : "Reproduza algo"
           }
         }
       }
     },
     "compact.unavailable" : {
-      "comment" : "Compact island title when Spotify can't be read",
+      "comment" : "Compact island title when the media session can't be read",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Spotify unavailable"
+            "value" : "Media unavailable"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Spotify indisponível"
+            "value" : "Mídia indisponível"
           }
         }
       }
     },
-    "error.applescript_code.format" : {
-      "comment" : "Fallback error message including an AppleScript error code",
+    "feature.media" : {
+      "comment" : "Feature picker label for media playback",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "AppleScript returned error %d."
+            "value" : "Media"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "O AppleScript retornou o erro %d."
-          }
-        }
-      }
-    },
-    "error.no_response" : {
-      "comment" : "Fallback error when Spotify returns no response",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Spotify didn't return a response."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "O Spotify não retornou uma resposta."
-          }
-        }
-      }
-    },
-    "feature.spotify" : {
-      "comment" : "Feature picker label for Spotify",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Spotify"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Spotify"
+            "value" : "Mídia"
           }
         }
       }
@@ -529,58 +393,58 @@
       }
     },
     "status.connecting.message" : {
-      "comment" : "Expanded island message while waiting for Spotify",
+      "comment" : "Expanded island message while waiting for media",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Waiting for permission and the current track…"
+            "value" : "Waiting for media to play…"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Aguardando permissão e os dados da faixa atual…"
+            "value" : "Aguardando uma mídia tocar…"
           }
         }
       }
     },
     "status.connecting.title" : {
-      "comment" : "Expanded island title while waiting for Spotify data",
+      "comment" : "Expanded island title while waiting for the current media session",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Connecting to Spotify"
+            "value" : "Connecting to media"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Conectando ao Spotify"
+            "value" : "Conectando à mídia"
           }
         }
       }
     },
     "status.nothing_playing.message" : {
-      "comment" : "Message shown when Spotify is open but nothing is playing",
+      "comment" : "Message shown when no media session is active",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Play a song in Spotify to see the details."
+            "value" : "Play a song or video in any app to see it here."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dê play em uma música no Spotify para ver os detalhes."
+            "value" : "Reproduza uma música ou vídeo em qualquer app para ver aqui."
           }
         }
       }
     },
     "status.nothing_playing.title" : {
-      "comment" : "Title shown when Spotify is open but no track is playing",
+      "comment" : "Title shown when no media session is active",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -596,138 +460,53 @@
         }
       }
     },
-    "status.permission.message" : {
-      "comment" : "Instructions to grant Automation permission",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Allow MacIsland in System Settings › Privacy & Security › Automation."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Autorize o MacIsland em Ajustes do Sistema › Privacidade e Segurança › Automação."
-          }
-        }
-      }
-    },
-    "status.permission.title" : {
-      "comment" : "Title shown when Automation permission is denied",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Permission needed"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Permissão necessária"
-          }
-        }
-      }
-    },
     "status.read_error.generic" : {
-      "comment" : "Generic message when Spotify communication fails",
+      "comment" : "Generic message when reading the media session fails",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Couldn't talk to Spotify."
+            "value" : "Couldn't read the current media session."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Não foi possível falar com o Spotify."
-          }
-        }
-      }
-    },
-    "status.read_error.malformed" : {
-      "comment" : "Message shown when Spotify returns malformed data",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Spotify returned an unexpected response."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "O Spotify respondeu em um formato inesperado."
-          }
-        }
-      }
-    },
-    "status.read_error.timeout" : {
-      "comment" : "Message shown when Spotify times out",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Spotify took too long to respond. Try again."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "O Spotify demorou para responder. Tente novamente."
+            "value" : "Não foi possível ler a sessão de mídia atual."
           }
         }
       }
     },
     "status.read_error.title" : {
-      "comment" : "Title shown when reading Spotify fails",
+      "comment" : "Title shown when reading the current media session fails",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Couldn't read Spotify"
+            "value" : "Couldn't read media"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Não foi possível ler o Spotify"
+            "value" : "Não foi possível ler a mídia"
           }
         }
       }
     },
-    "status.spotify_closed.message" : {
-      "comment" : "Message shown when Spotify is not running",
+    "status.read_error.unavailable" : {
+      "comment" : "Message shown when the system media service is unavailable",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Open Spotify to control your music from here."
+            "value" : "Media controls aren't available on this macOS version."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Abra o Spotify para controlar a música por aqui."
-          }
-        }
-      }
-    },
-    "status.spotify_closed.title" : {
-      "comment" : "Title shown when Spotify is not running",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Spotify isn't open"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Spotify não está aberto"
+            "value" : "Os controles de mídia não estão disponíveis nesta versão do macOS."
           }
         }
       }

@@ -99,7 +99,7 @@ The **Release** workflow runs automatically. It will:
 
 1. Import the Developer ID certificate into a temporary keychain.
 2. Build a universal (`arm64` + `x86_64`) Release app.
-3. Sign it with the Hardened Runtime and the Apple Events entitlement.
+3. Sign it with the Hardened Runtime.
 4. Submit it to Apple's notary service and wait for the result.
 5. Staple the notarization ticket to the app.
 6. Verify the signature and Gatekeeper assessment.
@@ -119,8 +119,8 @@ spctl --assess --type execute --verbose=4 /Applications/MacIsland.app
 codesign --verify --deep --strict --verbose=2 /Applications/MacIsland.app
 ```
 
-Both commands should succeed. The first launch should show the normal Automation
-permission prompt, not a Gatekeeper warning.
+Both commands should succeed. The first launch should not show a Gatekeeper
+warning.
 
 ## Troubleshooting
 

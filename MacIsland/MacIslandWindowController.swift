@@ -66,7 +66,7 @@ private final class IslandHostingView<Content: View>: NSHostingView<Content> {
 @MainActor
 final class MacIslandWindowController {
   private let state: MacIslandState
-  private let music: MusicService
+  private let media: MediaService
   private let timer: TimerService
 
   private var panel: MacIslandPanel?
@@ -77,9 +77,9 @@ final class MacIslandWindowController {
   private var cancellables = Set<AnyCancellable>()
   private var isManuallyHidden = false
 
-  init(state: MacIslandState, music: MusicService, timer: TimerService) {
+  init(state: MacIslandState, media: MediaService, timer: TimerService) {
     self.state = state
-    self.music = music
+    self.media = media
     self.timer = timer
   }
 
@@ -126,7 +126,7 @@ final class MacIslandWindowController {
     let hostingView = IslandHostingView(
       rootView: MacIslandView(
         state: state,
-        music: music,
+        media: media,
         timer: timer
       )
     )
