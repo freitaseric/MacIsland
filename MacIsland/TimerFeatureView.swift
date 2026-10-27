@@ -1,8 +1,3 @@
-//
-//  TimerFeatureView.swift
-//  MacIsland
-//
-
 import SwiftUI
 
 struct TimerCompactView: View {

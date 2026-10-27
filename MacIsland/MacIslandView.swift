@@ -1,10 +1,3 @@
-//
-//  MacIslandView.swift
-//  MacIsland
-//
-//  Created by Eric Freitas Sampaio on 26/10/26.
-//
-
 import Foundation
 import SwiftUI
 
@@ -80,8 +73,6 @@ struct MacIslandView: View {
     .ignoresSafeArea()
     .foregroundStyle(.white)
   }
-
-  // MARK: - Conteúdo
 
   @ViewBuilder
   private var content: some View {
@@ -475,8 +466,6 @@ struct MacIslandView: View {
     .accessibilityLabel(label)
   }
 
-  // MARK: - Textos
-
   private var compactTitle: String {
     switch music.status {
     case .ready:
@@ -523,8 +512,6 @@ struct MacIslandView: View {
     )
   }
 }
-
-// MARK: - Componentes
 
 struct IslandShape: Shape {
   var topRadius: CGFloat

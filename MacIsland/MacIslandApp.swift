@@ -1,10 +1,3 @@
-//
-//  MacIslandApp.swift
-//  MacIsland
-//
-//  Created by Eric Freitas Sampaio on 26/10/26.
-//
-
 import AppKit
 import ServiceManagement
 import SwiftUI
@@ -46,8 +39,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     music?.stop()
     timer?.stop()
   }
-
-  // MARK: - Menu bar
 
   private func setupStatusItem() {
     let item = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
@@ -161,8 +152,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
       : L10n.menuExpandIsland
   }
 
-  // MARK: - Actions
-
   @objc private func toggleVisibility() {
     guard let windowController else { return }
 
@@ -272,8 +261,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
   @objc private func quitApp() {
     NSApp.terminate(nil)
   }
-
-  // MARK: - Helpers
 
   private func presentLoginItemError(_ error: Error) {
     presentAlert(

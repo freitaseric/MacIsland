@@ -1,16 +1,6 @@
-//
-//  L10n.swift
-//  MacIsland
-//
-//  Todas as strings visíveis passam por aqui. As traduções ficam em
-//  Localizable.xcstrings (inglês como idioma base) e o texto do prompt
-//  de Automação em InfoPlist.xcstrings.
-//
-
 import Foundation
 
 nonisolated enum L10n {
-  // MARK: - Expanded status
 
   static let connectingTitle = String(
     localized: "status.connecting.title",
@@ -84,8 +74,6 @@ nonisolated enum L10n {
     comment: "Generic message when Spotify communication fails"
   )
 
-  // MARK: - Compact island
-
   static let compactNoPermission = String(
     localized: "compact.no_permission",
     defaultValue: "No permission",
@@ -140,8 +128,6 @@ nonisolated enum L10n {
     comment: "App name shown in the compact island"
   )
 
-  // MARK: - Buttons
-
   static let buttonOpenSpotify = String(
     localized: "button.open_spotify",
     defaultValue: "Open Spotify",
@@ -183,8 +169,6 @@ nonisolated enum L10n {
     defaultValue: "Collapse island",
     comment: "Accessibility label for collapsing the expanded island"
   )
-
-  // MARK: - Menu bar
 
   static let menuHideIsland = String(
     localized: "menu.hide_island",
@@ -245,9 +229,6 @@ nonisolated enum L10n {
     defaultValue: "MacIsland",
     comment: "App name shown as the menu title"
   )
-
-
-  // MARK: - Features and timer
 
   static let featureSpotify = String(
     localized: "feature.spotify",
@@ -339,15 +320,11 @@ nonisolated enum L10n {
     comment: "Accessibility label for the next track button"
   )
 
-  // MARK: - About
-
   static let aboutCredits = String(
     localized: "about.credits",
     defaultValue: "A dynamic island for your Mac.\nMusic, timers, and more to come. Not affiliated with Spotify or Apple.",
     comment: "Credits shown in the About panel"
   )
-
-  // MARK: - Launch at login
 
   static let loginItemErrorTitle = String(
     localized: "login_item.error.title",
@@ -366,8 +343,6 @@ nonisolated enum L10n {
     defaultValue: "Approve MacIsland in System Settings › General › Login Items.",
     comment: "Message when macOS requires approval for the login item"
   )
-
-  // MARK: - Errors
 
   static let errorAppleScriptCodeFormat = String(
     localized: "error.applescript_code.format",

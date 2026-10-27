@@ -1,12 +1,3 @@
-//
-//  TimerService.swift
-//  MacIsland
-//
-//  A small, permission-free integration: a focus timer that lives in the
-//  island alongside Spotify. It keeps running when the user switches back to
-//  Spotify and sends a local notification when it finishes.
-//
-
 import Combine
 import Foundation
 import UserNotifications

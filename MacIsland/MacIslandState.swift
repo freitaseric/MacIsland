@@ -1,10 +1,3 @@
-//
-//  MacIslandState.swift
-//  MacIsland
-//
-//  Created by Eric Freitas Sampaio on 26/10/26.
-//
-
 import Combine
 import SwiftUI
 

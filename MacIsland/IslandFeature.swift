@@ -1,11 +1,3 @@
-//
-//  IslandFeature.swift
-//  MacIsland
-//
-//  A feature is a self-contained thing the island can host. Spotify is the
-//  first one; the timer proves the island is more than a music widget.
-//
-
 import Foundation
 
 enum IslandFeature: String, CaseIterable, Identifiable {

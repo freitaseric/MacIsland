@@ -1,12 +1,3 @@
-//
-//  IslandGeometry.swift
-//  MacIsland
-//
-//  Calcula onde a ilha deve ficar na tela. Em MacBooks com notch, a ilha
-//  encosta no topo da tela e o conteúdo começa abaixo da menu bar. Em
-//  monitores sem notch, ela flutua logo abaixo da menu bar.
-//
-
 import AppKit
 
 struct IslandLayout: Equatable {
@@ -42,16 +33,12 @@ struct IslandLayout: Equatable {
       screen.auxiliaryTopLeftArea != nil
       && screen.auxiliaryTopRightArea != nil
 
-    // safeAreaInsets.top nem sempre inclui a menu bar inteira, então
-    // usamos o maior valor entre ele e a diferença frame/visibleFrame.
     let menuBarHeight = max(0, screen.frame.maxY - screen.visibleFrame.maxY)
     let topInset =
       hasNotch
       ? max(menuBarHeight, screen.safeAreaInsets.top)
       : 0
 
-    // Com notch: topo absoluto da tela, para a ilha "nascer" do notch.
-    // Sem notch: 6 pt abaixo da menu bar para não cobrir os ícones.
     let anchorTop =
       hasNotch
       ? screen.frame.maxY

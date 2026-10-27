@@ -1,14 +1,3 @@
-//
-//  MusicService.swift
-//  MacIsland
-//
-//  Created by Eric Freitas Sampaio on 26/10/26.
-//
-//  Conversa com o Spotify via AppleScript. O script roda fora da main
-//  thread para a ilha continuar fluida mesmo se o Spotify demorar a
-//  responder (ou enquanto o macOS mostra o pedido de permissão).
-//
-
 import AppKit
 import Combine
 import Foundation
@@ -154,8 +143,6 @@ final class MusicService: ObservableObject {
       return
     }
 
-    // Só mostra "conectando" na primeira tentativa. Se a permissão foi
-    // negada, não ficamos alternando entre loading e erro a cada poll.
     if track == nil, status == .idle || status == .spotifyNotRunning {
       status = .loading
     }
@@ -223,8 +210,6 @@ final class MusicService: ObservableObject {
     NSWorkspace.shared.open(url)
   }
 
-  // MARK: - Spotify lifecycle
-
   private func observeSpotifyLifecycle() {
     let center = NSWorkspace.shared.notificationCenter
     let bundleID = Self.spotifyBundleID
@@ -260,8 +245,6 @@ final class MusicService: ObservableObject {
       $0.bundleIdentifier == Self.spotifyBundleID
     }
   }
-
-  // MARK: - State
 
   private func apply(_ snapshot: SpotifySnapshot) {
     guard !snapshot.title.isEmpty else {
@@ -314,8 +297,6 @@ final class MusicService: ObservableObject {
     }
   }
 
-  // MARK: - Commands
-
   private func send(_ command: SpotifyCommand) {
     guard !isCommandInFlight else { return }
 
@@ -329,7 +310,6 @@ final class MusicService: ObservableObject {
         try await Self.execute(source)
         self.isCommandInFlight = false
 
-        // Dá um instante para o Spotify atualizar o estado antes de ler.
         try? await Task.sleep(for: .milliseconds(350))
         await self.refresh()
       } catch {
@@ -338,8 +318,6 @@ final class MusicService: ObservableObject {
       }
     }
   }
-
-  // MARK: - AppleScript
 
   nonisolated private static func execute(_ source: String) async throws {
     try await Task.detached(priority: .userInitiated) {

@@ -1,10 +1,3 @@
-//
-//  MacIslandWindowController.swift
-//  MacIsland
-//
-//  Created by Eric Freitas Sampaio on 26/10/26.
-//
-
 import AppKit
 import Combine
 import SwiftUI
@@ -13,15 +6,11 @@ private final class MacIslandPanel: NSPanel {
   override var canBecomeKey: Bool { true }
   override var canBecomeMain: Bool { false }
 
-  // Por padrão o AppKit empurra a janela para baixo da menu bar. Como a
-  // ilha precisa encostar no topo (e cobrir o notch), liberamos o frame.
   override func constrainFrameRect(_ frameRect: NSRect, to screen: NSScreen?) -> NSRect {
     frameRect
   }
 }
 
-/// Faz o primeiro clique funcionar mesmo com a ilha sem foco e usa uma
-/// tracking area AppKit para hover, que funciona mesmo com o app inativo.
 private final class IslandHostingView<Content: View>: NSHostingView<Content> {
   var onHoverChange: ((Bool) -> Void)?
   var onCompactClick: (() -> Void)?
@@ -117,8 +106,6 @@ final class MacIslandWindowController {
       defer: false
     )
 
-    // isFloatingPanel muda o nível para .floating; por isso ele vem
-    // ANTES de fixarmos o nível acima da menu bar.
     panel.isFloatingPanel = true
     panel.level = .statusBar
     panel.backgroundColor = .clear
@@ -214,11 +201,7 @@ final class MacIslandWindowController {
     }
   }
 
-  // MARK: - Layout
-
   private func targetScreen() -> NSScreen? {
-    // A ilha pertence ao MacBook: prioriza a tela com notch e só depois
-    // a tela principal (evita ela pular para um monitor externo).
     NSScreen.screens.first(where: {
       $0.auxiliaryTopLeftArea != nil && $0.auxiliaryTopRightArea != nil
     }) ?? NSScreen.main ?? NSScreen.screens.first
@@ -254,8 +237,6 @@ final class MacIslandWindowController {
       return
     }
 
-    // Deixa o SwiftUI terminar de encolher antes de diminuir a janela:
-    // assim nada é cortado no meio da animação.
     collapseTask = Task { [weak self] in
       try? await Task.sleep(for: .milliseconds(420))
       guard !Task.isCancelled, let self, !self.state.isExpanded else {

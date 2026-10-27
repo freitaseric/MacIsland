@@ -1,8 +1,3 @@
-//
-//  TimeFormatting.swift
-//  MacIsland
-//
-
 import Foundation
 
 enum IslandTime {
