@@ -58,8 +58,8 @@ da agenda, ações do sistema e o que mais merecer um relance.
   Escape ou clicando fora. O clique também continua funcionando.
 - **Progresso suave** — interpolado entre os polls do Spotify, sem saltos a
   cada dois segundos.
-- **Sai da frente** — esconde automaticamente quando outro app entra em tela
-  cheia (inclusive jogos borderless) e volta ao sair.
+- **Sai da frente** — fica fora de apps em tela cheia nativos e volta quando
+  você retorna à área de trabalho.
 - **Estados claros** — telas para permissão de Automação, Spotify fechado, nada
   tocando e erros inesperados.
 - **Menu bar completo** — mostrar/ocultar, expandir/recolher, abrir o Spotify,

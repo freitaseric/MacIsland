@@ -58,8 +58,8 @@ calendar events, system actions, and whatever else deserves a glance.
   or click away. Click still works too.
 - **Smooth progress** — interpolated between Spotify polls instead of jumping
   every two seconds.
-- **Out of the way** — hides automatically when another app goes full-screen
-  (including borderless games) and comes back when you leave.
+- **Out of the way** — stays out of native full-screen apps and comes back
+  when you return to your desktop.
 - **Clear states** — helpful screens for missing Automation permission, Spotify
   closed, nothing playing, and unexpected errors.
 - **Menu bar companion** — show/hide, expand/collapse, open Spotify, jump to

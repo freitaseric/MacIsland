@@ -20,8 +20,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Hover to expand, Escape and click-outside to collapse.
 - Expand or collapse from the menu bar at any time, including when Spotify is
   paused or not running.
-- The island hides automatically over full-screen apps and borderless games,
-  then returns when you leave full-screen.
+- The island stays out of native full-screen apps and returns when you go back
+  to the desktop.
 - Smooth progress interpolation between Spotify polls.
 - Play/pause, previous, and next controls with optimistic UI updates.
 - Automatic refresh when Spotify opens or quits.

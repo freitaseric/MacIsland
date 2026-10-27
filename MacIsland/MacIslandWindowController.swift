@@ -84,11 +84,9 @@ final class MacIslandWindowController {
   private var layout: IslandLayout?
   private var collapseTask: Task<Void, Never>?
   private var hoverTask: Task<Void, Never>?
-  private var fullScreenCheckTask: Task<Void, Never>?
   private var escapeMonitor: Any?
   private var cancellables = Set<AnyCancellable>()
   private var isManuallyHidden = false
-  private var isFullScreenHidden = false
 
   init(state: MacIslandState, music: MusicService, timer: TimerService) {
     self.state = state
@@ -198,8 +196,6 @@ final class MacIslandWindowController {
       return event
     }
 
-    observeFullScreenChanges()
-    isFullScreenHidden = isFullScreenAppActive()
     updateVisibility()
   }
 
@@ -211,93 +207,11 @@ final class MacIslandWindowController {
   private func updateVisibility() {
     guard let panel else { return }
 
-    if isManuallyHidden || isFullScreenHidden {
+    if isManuallyHidden {
       panel.orderOut(nil)
     } else {
       panel.orderFrontRegardless()
     }
-  }
-
-  // MARK: - Full screen
-
-  private func observeFullScreenChanges() {
-    let workspaceCenter = NSWorkspace.shared.notificationCenter
-    let names: [Notification.Name] = [
-      NSWorkspace.didActivateApplicationNotification,
-      NSWorkspace.activeSpaceDidChangeNotification,
-      NSWorkspace.didWakeNotification,
-    ]
-
-    for name in names {
-      workspaceCenter.publisher(for: name)
-        .sink { [weak self] _ in
-          self?.scheduleFullScreenCheck()
-        }
-        .store(in: &cancellables)
-    }
-
-    NotificationCenter.default.publisher(
-      for: NSApplication.didChangeScreenParametersNotification
-    )
-    .sink { [weak self] _ in
-      self?.scheduleFullScreenCheck()
-    }
-    .store(in: &cancellables)
-  }
-
-  private func scheduleFullScreenCheck() {
-    fullScreenCheckTask?.cancel()
-
-    fullScreenCheckTask = Task { [weak self] in
-      try? await Task.sleep(for: .milliseconds(250))
-      guard !Task.isCancelled, let self else { return }
-
-      let hidden = self.isFullScreenAppActive()
-      guard hidden != self.isFullScreenHidden else { return }
-
-      self.isFullScreenHidden = hidden
-      self.updateVisibility()
-    }
-  }
-
-  private func isFullScreenAppActive() -> Bool {
-    guard let frontmost = NSWorkspace.shared.frontmostApplication,
-      frontmost.processIdentifier != ProcessInfo.processInfo.processIdentifier,
-      let screen = targetScreen()
-    else { return false }
-
-    let windows = CGWindowListCopyWindowInfo(
-      [.optionOnScreenOnly, .excludeDesktopElements],
-      kCGNullWindowID
-    ) as? [[String: Any]] ?? []
-
-    let screenWidth = screen.frame.width
-    let screenHeight = screen.frame.height
-    let visibleHeight = screen.visibleFrame.height
-
-    for window in windows {
-      guard
-        let pid = window[kCGWindowOwnerPID as String] as? pid_t,
-        pid == frontmost.processIdentifier,
-        let layer = window[kCGWindowLayer as String] as? Int,
-        layer == 0,
-        let bounds = window[kCGWindowBounds as String] as? [String: Any],
-        let width = (bounds["Width"] as? NSNumber)?.doubleValue,
-        let height = (bounds["Height"] as? NSNumber)?.doubleValue,
-        let y = (bounds["Y"] as? NSNumber)?.doubleValue
-      else { continue }
-
-      let coversWidth = width >= Double(screenWidth) - 4
-      let coversScreen = height >= Double(screenHeight) - 4
-      let coversVisibleAreaAtTop =
-        y <= 1 && height >= Double(visibleHeight) - 4
-
-      if coversWidth, coversScreen || coversVisibleAreaAtTop {
-        return true
-      }
-    }
-
-    return false
   }
 
   // MARK: - Layout
