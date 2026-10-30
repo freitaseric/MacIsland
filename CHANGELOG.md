@@ -7,7 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-<!-- 1.1.0 is source-only for now: no tag or GitHub release until the app can be notarized. -->
+## [1.2.0] - 2026-10-30
+
+### Changed
+
+- The island now rests as a 280 pt wide band on the menu bar, centered on the
+  notch and exactly as tall as it, showing only the artwork on the left and a
+  single indicator on the right (the playback equalizer, or the timer progress
+  bar). It adds no height below the menu bar and renders no text.
+- Hovering the island reveals the title and artist as a compact peek and
+  clicking expands it, replacing the previous hover-to-expand behavior.
+- Expanding and collapsing are now anchored to the top edge of the screen and
+  driven by a single spring, so the island unfurls downward from the notch
+  instead of jumping or sliding into place.
+- The expanded panel is smaller and denser: 320×170 pt of content instead of
+  380×200 pt, with tighter artwork, controls, and feature picker.
+
+<!-- 1.2.0 is source-only for now: no tag or GitHub release until the app can be notarized. -->
 ## [1.1.0] - 2026-10-27
 
 ### Added
@@ -86,6 +102,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Automatic updates are not implemented.
 - Requires macOS 14 Sonoma or later.
 
-[Unreleased]: https://github.com/freitaseric/MacIsland/compare/v1.1.0...HEAD
+[Unreleased]: https://github.com/freitaseric/MacIsland/compare/v1.2.0...HEAD
+[1.2.0]: https://github.com/freitaseric/MacIsland/releases/tag/v1.2.0
 [1.1.0]: https://github.com/freitaseric/MacIsland/releases/tag/v1.1.0
 [1.0.0]: https://github.com/freitaseric/MacIsland/releases/tag/v1.0.0

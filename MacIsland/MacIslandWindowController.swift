@@ -100,7 +100,7 @@ final class MacIslandWindowController {
     state.apply(layout: layout)
 
     let panel = MacIslandPanel(
-      contentRect: layout.frame(expanded: state.isExpanded),
+      contentRect: layout.frame(for: state.presentation),
       styleMask: [.borderless, .nonactivatingPanel],
       backing: .buffered,
       defer: false
@@ -143,11 +143,11 @@ final class MacIslandWindowController {
 
     self.panel = panel
 
-    state.$isExpanded
+    state.$presentation
       .removeDuplicates()
       .dropFirst()
-      .sink { [weak self] expanded in
-        self?.handleExpansionChange(expanded)
+      .sink { [weak self] presentation in
+        self?.handlePresentationChange(presentation)
       }
       .store(in: &cancellables)
 
@@ -211,52 +211,56 @@ final class MacIslandWindowController {
     hoverTask?.cancel()
 
     if hovering {
-      guard !state.isExpanded else { return }
+      guard state.presentation == .idle else { return }
 
       hoverTask = Task { [weak self] in
-        try? await Task.sleep(for: .milliseconds(150))
+        try? await Task.sleep(for: .milliseconds(120))
         guard !Task.isCancelled, let self else { return }
-        self.state.expand()
+        self.state.showPeek()
       }
-    } else if state.isExpanded {
+    } else {
+      guard state.presentation != .idle else { return }
+
+      let delay = state.isExpanded ? 400 : 220
+
       hoverTask = Task { [weak self] in
-        try? await Task.sleep(for: .milliseconds(400))
-        guard !Task.isCancelled, let self, self.state.isExpanded else {
-          return
+        try? await Task.sleep(for: .milliseconds(delay))
+        guard !Task.isCancelled, let self else { return }
+
+        if self.state.isExpanded {
+          self.state.collapse()
+        } else {
+          self.state.rest()
         }
-        self.state.collapse()
       }
     }
   }
 
-  private func handleExpansionChange(_ expanded: Bool) {
+  private func handlePresentationChange(_ presentation: IslandPresentation) {
     collapseTask?.cancel()
 
-    if expanded {
-      applyExpandedFrameAfterStateCommit()
+    if presentation == .idle {
+      collapseTask = Task { [weak self] in
+        try? await Task.sleep(for: .milliseconds(420))
+        guard
+          !Task.isCancelled,
+          let self,
+          self.state.presentation == .idle
+        else {
+          return
+        }
+        self.applyFrame(for: .idle)
+      }
       return
     }
 
-    collapseTask = Task { [weak self] in
-      try? await Task.sleep(for: .milliseconds(420))
-      guard !Task.isCancelled, let self, !self.state.isExpanded else {
-        return
-      }
-      self.applyFrame(expanded: false)
-    }
+    applyFrame(for: presentation)
   }
 
-  private func applyExpandedFrameAfterStateCommit() {
-    DispatchQueue.main.async { [weak self] in
-      guard let self, self.state.isExpanded else { return }
-      self.applyFrame(expanded: true)
-    }
-  }
-
-  private func applyFrame(expanded: Bool) {
+  private func applyFrame(for presentation: IslandPresentation) {
     guard let panel, let layout else { return }
     panel.setFrame(
-      layout.frame(expanded: expanded),
+      layout.frame(for: presentation),
       display: true,
       animate: false
     )
@@ -269,7 +273,7 @@ final class MacIslandWindowController {
     self.layout = layout
     state.apply(layout: layout)
     panel.setFrame(
-      layout.frame(expanded: state.isExpanded),
+      layout.frame(for: state.presentation),
       display: true,
       animate: false
     )

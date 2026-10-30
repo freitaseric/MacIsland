@@ -7,72 +7,121 @@ struct MacIslandView: View {
   @ObservedObject var media: MediaService
   @ObservedObject var timer: TimerService
 
-  private var isExpanded: Bool { state.isExpanded }
+  private var presentation: IslandPresentation { state.presentation }
+  private var isExpanded: Bool { presentation == .expanded }
 
-  private var islandSize: CGSize {
-    CGSize(
-      width: isExpanded ? IslandLayout.expandedWidth : IslandLayout.compactWidth,
-      height: state.topInset
-        + (isExpanded
-          ? IslandLayout.expandedContentHeight
-          : IslandLayout.compactContentHeight)
-    )
-  }
+  private var islandSize: CGSize { state.islandSize }
+
+  private var contentTopPadding: CGFloat { isExpanded ? 8 : 5 }
+  private var contentHorizontalPadding: CGFloat { isExpanded ? 14 : 9 }
+  private var contentBottomPadding: CGFloat { isExpanded ? 10 : 5 }
 
   private var islandShape: IslandShape {
     IslandShape(
-      topRadius: state.hasNotch ? 0 : (isExpanded ? 26 : 18),
-      bottomRadius: isExpanded ? 26 : 18
+      topRadius: state.hasNotch ? 0 : (isExpanded ? 26 : 16),
+      bottomRadius: isExpanded ? 26 : 12
     )
   }
 
   var body: some View {
-    VStack(spacing: 0) {
-      ZStack(alignment: .top) {
-        islandShape
-          .fill(backgroundGradient)
-
-        content
-          .padding(.top, state.topInset + (isExpanded ? 12 : 6))
-          .padding(.horizontal, isExpanded ? 16 : 10)
-          .padding(.bottom, isExpanded ? 12 : 6)
-
-        if isExpanded {
-          HStack(spacing: 0) {
-            Spacer(minLength: 0)
-            collapseButton
-          }
-          .padding(.top, state.topInset + 11)
-          .padding(.trailing, 14)
-          .transition(.opacity)
-        }
-      }
-      .frame(width: islandSize.width, height: islandSize.height)
-      .clipShape(islandShape)
-      .contentShape(islandShape)
-      .onTapGesture {
-        if !isExpanded {
-          state.expand()
-        }
-      }
-      .animation(
-        .spring(response: 0.36, dampingFraction: 0.86),
-        value: isExpanded
-      )
-      .animation(
-        .easeInOut(duration: 0.18),
-        value: state.activeFeature
-      )
-      .animation(
-        .spring(response: 0.36, dampingFraction: 0.86),
-        value: state.topInset
-      )
-
-      Spacer(minLength: 0)
+    GeometryReader { proxy in
+      island
+        .frame(width: islandSize.width, height: islandSize.height)
+        .position(
+          x: proxy.size.width / 2,
+          y: islandSize.height / 2
+        )
     }
-    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
     .ignoresSafeArea()
     .foregroundStyle(.white)
+  }
+
+  private var island: some View {
+    ZStack(alignment: .top) {
+      islandShape
+        .fill(backgroundGradient)
+
+      if presentation == .idle {
+        idleContent
+          .frame(width: islandSize.width, height: islandSize.height)
+      } else {
+        content
+          .padding(.top, state.topInset + contentTopPadding)
+          .padding(.horizontal, contentHorizontalPadding)
+          .padding(.bottom, contentBottomPadding)
+      }
+
+      if isExpanded {
+        HStack(spacing: 0) {
+          Spacer(minLength: 0)
+          collapseButton
+        }
+        .padding(.top, state.topInset + 7)
+        .padding(.trailing, 12)
+        .transition(.opacity)
+      }
+    }
+    .frame(width: islandSize.width, height: islandSize.height)
+    .clipShape(islandShape)
+    .contentShape(islandShape)
+    .onTapGesture {
+      if !isExpanded {
+        state.expand()
+      }
+    }
+    .animation(expansionAnimation, value: presentation)
+    .animation(
+      .easeInOut(duration: 0.18),
+      value: state.activeFeature
+    )
+    .animation(expansionAnimation, value: state.topInset)
+  }
+
+  private var expansionAnimation: Animation {
+    .spring(response: 0.34, dampingFraction: 0.86)
+  }
+
+  private var idleContent: some View {
+    HStack(spacing: 0) {
+      idleArtwork
+      Spacer(minLength: 0)
+      idleIndicator
+    }
+    .padding(.horizontal, 16)
+    .accessibilityElement(children: .combine)
+    .accessibilityLabel(compactTitle)
+    .accessibilityAddTraits(.isButton)
+    .accessibilityAction {
+      state.expand()
+    }
+  }
+
+  @ViewBuilder
+  private var idleArtwork: some View {
+    switch state.activeFeature {
+    case .media:
+      ArtworkView(
+        data: media.item?.artworkData,
+        size: 18,
+        cornerRadius: 5
+      )
+    case .timer:
+      Image(systemName: "timer")
+        .font(.system(size: 12, weight: .semibold))
+        .foregroundStyle(.orange)
+        .frame(width: 18, height: 18)
+    }
+  }
+
+  @ViewBuilder
+  private var idleIndicator: some View {
+    switch state.activeFeature {
+    case .media:
+      EqualizerBars(isPlaying: media.item?.isPlaying ?? false)
+    case .timer:
+      TimerProgressBar(progress: timer.elapsedFraction, tint: .orange)
+        .frame(width: 46, height: 3)
+    }
   }
 
   @ViewBuilder
@@ -80,8 +129,8 @@ struct MacIslandView: View {
     if isExpanded {
       expandedIsland
         .transition(
-          .opacity.combined(
-            with: .scale(scale: 0.97, anchor: .top)
+          .opacity.animation(
+            .easeOut(duration: 0.22).delay(0.05)
           )
         )
     } else {
@@ -135,10 +184,10 @@ struct MacIslandView: View {
         } label: {
           HStack(spacing: 4) {
             Image(systemName: feature.symbolName)
-              .font(.system(size: 9, weight: .semibold))
+              .font(.system(size: 8.5, weight: .semibold))
 
             Text(feature.title)
-              .font(.system(size: 9.5, weight: .semibold))
+              .font(.system(size: 9, weight: .semibold))
 
             if feature == .timer, !selected,
               timer.isRunning || timer.isFinished
@@ -149,8 +198,8 @@ struct MacIslandView: View {
             }
           }
           .foregroundStyle(selected ? .white : .white.opacity(0.45))
-          .padding(.horizontal, 10)
-          .frame(height: 22)
+          .padding(.horizontal, 9)
+          .frame(height: 20)
           .background(
             selected ? .white.opacity(0.12) : .clear,
             in: Capsule()
@@ -167,14 +216,14 @@ struct MacIslandView: View {
   }
 
   private var mediaCompactContent: some View {
-    HStack(spacing: 8) {
+    HStack(spacing: 7) {
       ArtworkView(
         data: media.item?.artworkData,
-        size: 24,
-        cornerRadius: 7
+        size: 18,
+        cornerRadius: 5
       )
 
-      VStack(alignment: .leading, spacing: 1) {
+      VStack(alignment: .leading, spacing: 0) {
         Text(compactTitle)
           .font(.system(size: 10.5, weight: .semibold))
           .lineLimit(1)
@@ -245,37 +294,37 @@ struct MacIslandView: View {
       HStack(spacing: 10) {
         ArtworkView(
           data: media.item?.artworkData,
-          size: 52,
-          cornerRadius: 10
+          size: 46,
+          cornerRadius: 9
         )
 
-        VStack(alignment: .leading, spacing: 3) {
+        VStack(alignment: .leading, spacing: 2) {
           Text(media.item?.title ?? L10n.featureMedia)
-            .font(.system(size: 13, weight: .semibold))
+            .font(.system(size: 12.5, weight: .semibold))
             .lineLimit(1)
 
           Text(media.item?.artist ?? "")
-            .font(.system(size: 10.5, weight: .medium))
+            .font(.system(size: 10, weight: .medium))
             .foregroundStyle(.white.opacity(0.62))
             .lineLimit(1)
 
           if let detailLine {
             Text(detailLine)
-              .font(.system(size: 9))
+              .font(.system(size: 8.5))
               .foregroundStyle(.white.opacity(0.38))
               .lineLimit(1)
           }
         }
 
-        Spacer(minLength: 26)
+        Spacer(minLength: 20)
       }
-      .frame(height: 52)
+      .frame(height: 46)
 
       progressRow
-        .padding(.top, 12)
+        .padding(.top, 9)
 
       controlsRow
-        .padding(.top, 12)
+        .padding(.top, 9)
     }
     .frame(maxWidth: .infinity, alignment: .leading)
   }
@@ -322,7 +371,7 @@ struct MacIslandView: View {
           Spacer(minLength: 0)
           Text(duration > 0 ? IslandTime.label(duration) : "--:--")
         }
-        .font(.system(size: 9, weight: .medium).monospacedDigit())
+        .font(.system(size: 8.5, weight: .medium).monospacedDigit())
         .foregroundStyle(.white.opacity(0.38))
       }
     }
@@ -335,13 +384,13 @@ struct MacIslandView: View {
       if media.canSkip {
         mediaButton(
           "backward.fill",
-          size: 15,
+          size: 14,
           label: L10n.buttonPrevious
         ) {
           media.previous()
         }
 
-        Spacer().frame(width: 26)
+        Spacer().frame(width: 22)
       }
 
       Button {
@@ -352,8 +401,8 @@ struct MacIslandView: View {
             ? "pause.fill"
             : "play.fill"
         )
-        .font(.system(size: 15, weight: .bold))
-        .frame(width: 32, height: 32)
+        .font(.system(size: 14, weight: .bold))
+        .frame(width: 30, height: 30)
         .background(.white.opacity(0.14), in: Circle())
       }
       .buttonStyle(.plain)
@@ -365,11 +414,11 @@ struct MacIslandView: View {
       )
 
       if media.canSkip {
-        Spacer().frame(width: 26)
+        Spacer().frame(width: 22)
 
         mediaButton(
           "forward.fill",
-          size: 15,
+          size: 14,
           label: L10n.buttonNext
         ) {
           media.next()
@@ -378,7 +427,7 @@ struct MacIslandView: View {
 
       Spacer(minLength: 0)
     }
-    .frame(height: 38)
+    .frame(height: 34)
     .opacity(media.canControl ? 1 : 0.45)
   }
 
@@ -444,7 +493,7 @@ struct MacIslandView: View {
     Button(action: action) {
       Image(systemName: symbol)
         .font(.system(size: size, weight: .semibold))
-        .frame(width: 30, height: 30)
+        .frame(width: 28, height: 28)
         .contentShape(Rectangle())
     }
     .buttonStyle(.plain)

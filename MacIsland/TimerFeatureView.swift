@@ -6,12 +6,12 @@ struct TimerCompactView: View {
   var body: some View {
     HStack(spacing: 8) {
       Image(systemName: "timer")
-        .font(.system(size: 15, weight: .semibold))
+        .font(.system(size: 13, weight: .semibold))
         .foregroundStyle(.orange)
-        .frame(width: 24, height: 24)
-        .background(.white.opacity(0.08), in: RoundedRectangle(cornerRadius: 7))
+        .frame(width: 20, height: 20)
+        .background(.white.opacity(0.08), in: RoundedRectangle(cornerRadius: 6))
 
-      VStack(alignment: .leading, spacing: 1) {
+      VStack(alignment: .leading, spacing: 0) {
         Text(IslandTime.label(timer.remaining))
           .font(.system(size: 10.5, weight: .semibold).monospacedDigit())
 
@@ -41,14 +41,14 @@ struct TimerExpandedView: View {
   @ObservedObject var timer: TimerService
 
   var body: some View {
-    VStack(spacing: 8) {
+    VStack(spacing: 6) {
       HStack(alignment: .firstTextBaseline, spacing: 8) {
         Image(systemName: "timer")
           .font(.system(size: 15, weight: .semibold))
           .foregroundStyle(.orange)
 
         Text(IslandTime.label(timer.remaining))
-          .font(.system(size: 32, weight: .semibold).monospacedDigit())
+          .font(.system(size: 30, weight: .semibold).monospacedDigit())
 
         Spacer(minLength: 0)
 
@@ -56,7 +56,7 @@ struct TimerExpandedView: View {
           .font(.system(size: 9, weight: .medium))
           .foregroundStyle(.white.opacity(0.4))
       }
-      .frame(height: 40)
+      .frame(height: 38)
 
       TimerProgressBar(progress: timer.elapsedFraction, tint: .orange)
         .frame(height: 4)

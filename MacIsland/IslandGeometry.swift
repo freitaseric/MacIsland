@@ -1,25 +1,47 @@
 import AppKit
 
+enum IslandPresentation: Equatable {
+  case idle
+  case peek
+  case expanded
+}
+
 struct IslandLayout: Equatable {
-  static let compactWidth: CGFloat = 224
-  static let expandedWidth: CGFloat = 380
-  static let compactContentHeight: CGFloat = 36
-  static let expandedContentHeight: CGFloat = 200
+  static let idleWidth: CGFloat = 280
+  static let peekWidth: CGFloat = 280
+  static let peekContentHeight: CGFloat = 34
+  static let expandedWidth: CGFloat = 320
+  static let expandedContentHeight: CGFloat = 170
+  static let noNotchWidth: CGFloat = 200
+  static let noNotchIdleHeight: CGFloat = 29
 
   let hasNotch: Bool
   let topInset: CGFloat
   let anchorTop: CGFloat
   let centerX: CGFloat
 
-  func size(expanded: Bool) -> CGSize {
-    CGSize(
-      width: expanded ? Self.expandedWidth : Self.compactWidth,
-      height: topInset + (expanded ? Self.expandedContentHeight : Self.compactContentHeight)
-    )
+  func size(for presentation: IslandPresentation) -> CGSize {
+    switch presentation {
+    case .idle:
+      return CGSize(
+        width: hasNotch ? Self.idleWidth : Self.noNotchWidth,
+        height: hasNotch ? topInset : Self.noNotchIdleHeight
+      )
+    case .peek:
+      return CGSize(
+        width: hasNotch ? Self.peekWidth : Self.noNotchWidth,
+        height: topInset + Self.peekContentHeight
+      )
+    case .expanded:
+      return CGSize(
+        width: Self.expandedWidth,
+        height: topInset + Self.expandedContentHeight
+      )
+    }
   }
 
-  func frame(expanded: Bool) -> NSRect {
-    let size = size(expanded: expanded)
+  func frame(for presentation: IslandPresentation) -> NSRect {
+    let size = size(for: presentation)
     return NSRect(
       x: (centerX - size.width / 2).rounded(),
       y: (anchorTop - size.height).rounded(),
