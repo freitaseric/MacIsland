@@ -228,3 +228,7 @@ Issues and pull requests are welcome. Keep changes focused and test with
 MacIsland is an independent project. It is not affiliated with, endorsed by, or
 sponsored by Spotify or Apple. Spotify is a trademark of Spotify AB. MacBook and
 Mac are trademarks of Apple Inc.
+
+---
+
+[![](https://img.shields.io/badge/powered_by-dsh-4D6BFE?style=flat-square&logo=deepseek&logoColor=white)](https://github.com/deepseek-ai/deepseek-harness)
